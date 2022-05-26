@@ -1,6 +1,6 @@
 Class {
 	#name : #BaselineOfGToolkitNotifications,
-	#superclass : #Object,
+	#superclass : #BaselineOf,
 	#category : #BaselineOfGToolkitNotifications
 }
 
