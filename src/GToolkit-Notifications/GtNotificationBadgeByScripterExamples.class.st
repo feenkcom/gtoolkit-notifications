@@ -80,8 +80,8 @@ GtNotificationBadgeByScripterExamples >> displayInformNotification [
 		aStep check
 			label: 'Check anchored badge label';
 			satisfies: [ :aBadge | 
-				(aBadge isKindOf: BrBadge) and: [
-					aBadge label asString = '1' ] ];
+				(aBadge isKindOf: BrLabel) and: [
+					aBadge text asString = '1' ] ];
 			onTarget: [ :theCheckStep |
 				self dropdownBadgeElementTarget: theCheckStep ] ].
 	
@@ -94,7 +94,7 @@ GtNotificationBadgeByScripterExamples >> dropdownBadgeElementTarget: aStep [
 	aStep
 		onSpaceRoot;
 		onBreadthFirstChildOfClass: BrAnchoredElement;
-		onBreadthFirstChildOfClass: BrBadge.
+		onBreadthFirstChildOfClass: BrLabel.
 	^ aStep
 ]
 
@@ -183,7 +183,7 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 			aStep check
 				label: 'Check notification badge label';
 				satisfies: [ :aBadgeElement |
-					aBadgeElement badgeElement label asString = '1' ];
+					aBadgeElement badgeElement text asString = '1' ];
 				onSpaceRoot;
 				onChildAt: 2 ].
 	

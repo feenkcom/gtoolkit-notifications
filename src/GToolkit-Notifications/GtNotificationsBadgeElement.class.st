@@ -61,7 +61,7 @@ GtNotificationsBadgeElement >> initialize [
 
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeBadgeElement [
-	badgeElement := self newBadge label: '0'.
+	badgeElement := self newBadge text: '0'.
 	badgeContainer := BrHorizontalPane new
 			addChild: badgeElement;
 			addAptitude: ((BrGlamorousWithDropdownAptitude
@@ -74,8 +74,7 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeDropdownBadgeElement [
-	dropdownBadgeElement := self newBadge
-		label: '0'.
+	dropdownBadgeElement := self newBadge text: '0'.
 	dropdownBadgeContainer := BrHorizontalPane new
 			addChild: dropdownBadgeElement;
 			height: 21;
@@ -101,9 +100,12 @@ GtNotificationsBadgeElement >> listElement [
 
 { #category : #'private - instance creation' }
 GtNotificationsBadgeElement >> newBadge [
-	^ BrBadge new
-		aptitude: BrGlamorousBadgeWithLabelAptitude;
-		exact: 21@21
+	^ BrLabel new
+		aptitude: (BrGlamorousLabelAptitude new
+				foreground: Color white);
+		background: Color orange;
+		alignCenter;
+		exact: 21 @ 21
 ]
 
 { #category : #'private - instance creation' }
@@ -162,9 +164,9 @@ GtNotificationsBadgeElement >> updateDropdownBadgeContainer [
 GtNotificationsBadgeElement >> updateElement [
 	super updateElement.
 	self updateBadgeContainer.
-	self badgeElement label: self notificationsCount.
+	self badgeElement text: self notificationsCount.
 	self updateDropdownBadgeContainer.
-	self dropdownBadgeElement label: self notificationsCount.
+	self dropdownBadgeElement text: self notificationsCount.
 	self updateVisibility
 ]
 
