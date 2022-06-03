@@ -118,6 +118,15 @@ GtNotificationsBadgeElement >> newDropdownContent [
 		removeFromParent
 ]
 
+{ #category : #'private - updating' }
+GtNotificationsBadgeElement >> notificationsGroupedBySummaryClass [
+	| notificationGroup |
+
+	notificationGroup := self notifications asArray groupedBy: #summaryClass.
+	notificationGroup removeKey: nil ifAbsent: [].
+	^ notificationGroup
+]
+
 { #category : #accessing }
 GtNotificationsBadgeElement >> onNotificationsChanged [
 	super onNotificationsChanged.
@@ -131,11 +140,12 @@ GtNotificationsBadgeElement >> show [
 
 { #category : #'private - updating' }
 GtNotificationsBadgeElement >> updateBadgeContainer [
+
 	self removeChildNamed: #badge.
 	self initializeBadgeElement.
 	self addChild: self badgeContainer as: #badge.
 
-	(self notifications asArray groupedBy: #summaryClass)
+	self notificationsGroupedBySummaryClass
 		keysAndValuesDo: [ :aSummary :aNotificationsCollection | badgeContainer addChild: (aSummary new notifications: aNotificationsCollection) ]
 ]
 
@@ -143,8 +153,9 @@ GtNotificationsBadgeElement >> updateBadgeContainer [
 GtNotificationsBadgeElement >> updateDropdownBadgeContainer [
 	self initializeDropdownBadgeElement.
 
-	(self notifications asArray groupedBy: #summaryClass)
-		keysAndValuesDo: [ :aSummary :aNotificationsCollection | dropdownBadgeContainer addChild: (aSummary new notifications: aNotificationsCollection) ].
+	self notificationsGroupedBySummaryClass 
+		keysAndValuesDo: [ :aSummary :aNotificationsCollection | 
+			dropdownBadgeContainer addChild: (aSummary new notifications: aNotificationsCollection) ].
 ]
 
 { #category : #'private - updating' }
