@@ -32,6 +32,11 @@ GtNotifications >> asArray [
 		collection asArray ]
 ]
 
+{ #category : #accessing }
+GtNotifications >> do: aBlock [
+	collection do: aBlock
+]
+
 { #category : #'gt-extensions' }
 GtNotifications >> gtNotificationsFor: aView [
 	<gtView>

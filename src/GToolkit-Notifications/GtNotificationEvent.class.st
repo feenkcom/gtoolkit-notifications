@@ -53,3 +53,10 @@ GtNotificationEvent >> onRemovalRequestSend: aSelector to: aReceiver [
 GtNotificationEvent >> requestRemoval [
 	self announce: (GtNotificationRemovalRequest notification: self)
 ]
+
+{ #category : #accessing }
+GtNotificationEvent >> summaryClass [
+	"Return a class that when instantiated displays the notification summary to the user"
+	<return: #GtNotificationSummary>
+	^ nil
+]

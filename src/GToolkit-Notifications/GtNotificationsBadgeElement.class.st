@@ -4,10 +4,17 @@ Class {
 	#instVars : [
 		'listElement',
 		'badgeElement',
-		'dropdownBadgeElement'
+		'dropdownBadgeElement',
+		'badgeContainer',
+		'dropdownBadgeContainer'
 	],
 	#category : #'GToolkit-Notifications-Badge'
 }
+
+{ #category : #initialization }
+GtNotificationsBadgeElement >> badgeContainer [
+	^ badgeContainer
+]
 
 { #category : #'private - accessing' }
 GtNotificationsBadgeElement >> badgeElement [
@@ -18,6 +25,11 @@ GtNotificationsBadgeElement >> badgeElement [
 { #category : #initialization }
 GtNotificationsBadgeElement >> defaultLayout [
 	^ BlFrameLayout new
+]
+
+{ #category : #'private - instance creation' }
+GtNotificationsBadgeElement >> dropdownBadgeContainer [
+	^ dropdownBadgeContainer
 ]
 
 { #category : #'private - accessing' }
@@ -42,25 +54,33 @@ GtNotificationsBadgeElement >> initialize [
 	self initializeDropdownBadgeElement.
 	self initializeBadgeElement.
 	
-	self addChild: self badgeElement as: #badge.
+	self addChild: self badgeContainer as: #badge.
 	
 	self addAptitude: (BrLayoutResizerAptitude new anyToFitContent).
 ]
 
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeBadgeElement [
-	badgeElement := self newBadge
-		label: '0';
-		addAptitude: ((BrGlamorousWithDropdownAptitude
-			handle: [ self newDropdownBadge ]
-			content: [ self newDropdownContent ])
-				preferredExtent: 600@600)
+	badgeElement := self newBadge text: '0'.
+	badgeContainer := BrHorizontalPane new
+			addChild: badgeElement;
+			addAptitude: ((BrGlamorousWithDropdownAptitude
+					handle: [ self newDropdownBadge ]
+					content: [ self newDropdownContent ]) preferredExtent: 600 @ 600);
+			height: 21;
+			hFitContent;
+			background: Color white;
+			geometry: (BlRoundedRectangleGeometry cornerRadius: 4)
 ]
 
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeDropdownBadgeElement [
-	dropdownBadgeElement := self newBadge
-		label: '0'
+	dropdownBadgeElement := self newBadge text: '0'.
+	dropdownBadgeContainer := BrHorizontalPane new
+			addChild: dropdownBadgeElement;
+			height: 21;
+			hFitContent;
+			background: Color white
 ]
 
 { #category : #initialization }
@@ -81,14 +101,17 @@ GtNotificationsBadgeElement >> listElement [
 
 { #category : #'private - instance creation' }
 GtNotificationsBadgeElement >> newBadge [
-	^ BrBadge new
-		aptitude: BrGlamorousBadgeWithLabelAptitude;
-		exact: 21@21
+	^ BrLabel new
+		aptitude: (BrGlamorousLabelAptitude new
+				foreground: Color white);
+		background: Color orange;
+		alignCenter;
+		exact: 21 @ 21
 ]
 
 { #category : #'private - instance creation' }
 GtNotificationsBadgeElement >> newDropdownBadge [
-	^ self dropdownBadgeElement
+	^ self dropdownBadgeContainer
 		removeFromParent
 ]
 
@@ -96,6 +119,15 @@ GtNotificationsBadgeElement >> newDropdownBadge [
 GtNotificationsBadgeElement >> newDropdownContent [
 	^ self listElement
 		removeFromParent
+]
+
+{ #category : #'private - updating' }
+GtNotificationsBadgeElement >> notificationsGroupedBySummaryClass [
+	| notificationGroup |
+
+	notificationGroup := self notifications asArray groupedBy: #summaryClass.
+	notificationGroup removeKey: nil ifAbsent: [].
+	^ notificationGroup
 ]
 
 { #category : #accessing }
@@ -110,10 +142,36 @@ GtNotificationsBadgeElement >> show [
 ]
 
 { #category : #'private - updating' }
+GtNotificationsBadgeElement >> updateBadgeContainer [
+
+	self removeChildNamed: #badge.
+	self initializeBadgeElement.
+	self addChild: self badgeContainer as: #badge.
+
+	self notificationsGroupedBySummaryClass
+		keysAndValuesDo: [ :aSummary :aNotificationsCollection | badgeContainer addChild: (aSummary new notifications: aNotificationsCollection) ]
+]
+
+{ #category : #'private - updating' }
+GtNotificationsBadgeElement >> updateDropdownBadgeContainer [
+	"Remove summaries, but not the badge itself"
+	(2 to: dropdownBadgeContainer children size)
+		do: [ :anIndex | dropdownBadgeContainer removeChildAt: anIndex ].
+		
+	"Update summaries"
+	self notificationsGroupedBySummaryClass
+		keysAndValuesDo: [ :aSummary :aNotificationsCollection | 
+			dropdownBadgeContainer
+				addChild: (aSummary new notifications: aNotificationsCollection) ]
+]
+
+{ #category : #'private - updating' }
 GtNotificationsBadgeElement >> updateElement [
 	super updateElement.
-	self badgeElement label: self notificationsCount.
-	self dropdownBadgeElement label: self notificationsCount.
+	self updateBadgeContainer.
+	self badgeElement text: self notificationsCount.
+	self updateDropdownBadgeContainer.
+	self dropdownBadgeElement text: self notificationsCount.
 	self updateVisibility
 ]
 

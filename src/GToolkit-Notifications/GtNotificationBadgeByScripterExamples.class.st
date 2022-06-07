@@ -35,32 +35,32 @@ GtNotificationBadgeByScripterExamples >> closeButtonTarget: aStep [
 { #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> closeInformNotification [
 	<gtExample>
+	
 	| aScripter |
 	aScripter := self displayInformNotification.
-		
-	aScripter 
+
+	aScripter
 		substep: 'Close notification'
 		do: [ :aStep | 
-			aStep click 
+			aStep click
 				label: 'Click on close notification button';
 				onTarget: [ :theClick | 
-					self 
-						dropdownListItemElementTarget: theClick 
+					self
+						dropdownListItemElementTarget: theClick
 						itemClass: GtNotificationMessageElement.
-					self 
-						closeButtonTarget: theClick ].
+					self closeButtonTarget: theClick ].
 			aStep wait forEmptySpaceTaskQueue.
-			
-			aStep check 
+
+			aStep check
 				label: 'Check empty list';
-				value: [ :aList | 
-					aList listElement items size ]
-				equals: 1;
-				onTarget: [ :theCheck | 
-					self dropdownListElementTarget: theCheck ]
-			
-			 ].
-	
+				value: [ :aList | aList listElement items size ] equals: 1;
+				onTarget: [ :theCheck | self dropdownListElementTarget: theCheck ].
+
+			aStep check
+				label: 'Check anchored badge label';
+				satisfies: [ :aBadge | (aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
+				onTarget: [ :theCheckStep | self dropdownBadgeElementTarget: theCheckStep ] ].
+
 	^ aScripter syncContinue
 ]
 
@@ -80,8 +80,8 @@ GtNotificationBadgeByScripterExamples >> displayInformNotification [
 		aStep check
 			label: 'Check anchored badge label';
 			satisfies: [ :aBadge | 
-				(aBadge isKindOf: BrBadge) and: [
-					aBadge label asString = '1' ] ];
+				(aBadge isKindOf: BrLabel) and: [
+					aBadge text asString = '1' ] ];
 			onTarget: [ :theCheckStep |
 				self dropdownBadgeElementTarget: theCheckStep ] ].
 	
@@ -94,7 +94,7 @@ GtNotificationBadgeByScripterExamples >> dropdownBadgeElementTarget: aStep [
 	aStep
 		onSpaceRoot;
 		onBreadthFirstChildOfClass: BrAnchoredElement;
-		onBreadthFirstChildOfClass: BrBadge.
+		onBreadthFirstChildOfClass: BrLabel.
 	^ aStep
 ]
 
@@ -183,7 +183,7 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 			aStep check
 				label: 'Check notification badge label';
 				satisfies: [ :aBadgeElement |
-					aBadgeElement badgeElement label asString = '1' ];
+					aBadgeElement badgeElement text asString = '1' ];
 				onSpaceRoot;
 				onChildAt: 2 ].
 	
