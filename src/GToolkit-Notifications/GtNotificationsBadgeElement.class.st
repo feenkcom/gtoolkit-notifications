@@ -70,12 +70,7 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 			height: 21;
 			hFitContent;
 			background: Color white;
-			geometry: (BlRoundedRectangleGeometry
-					cornerRadii: (BlCornerRadii new
-							bottomLeft: 0;
-							topLeft: 0;
-							bottomRight: 4;
-							topRight: 4))
+			geometry: (BlRoundedRectangleGeometry cornerRadius: 4)
 ]
 
 { #category : #initialization }
