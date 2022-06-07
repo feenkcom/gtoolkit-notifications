@@ -69,7 +69,13 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 					content: [ self newDropdownContent ]) preferredExtent: 600 @ 600);
 			height: 21;
 			hFitContent;
-			background: Color white
+			background: Color white;
+			geometry: (BlRoundedRectangleGeometry
+					cornerRadii: (BlCornerRadii new
+							bottomLeft: 0;
+							topLeft: 0;
+							bottomRight: 4;
+							topRight: 4))
 ]
 
 { #category : #initialization }
