@@ -155,7 +155,7 @@ GtNotificationsBadgeElement >> updateBadgeContainer [
 { #category : #'private - updating' }
 GtNotificationsBadgeElement >> updateDropdownBadgeContainer [
 	"Remove summaries, but not the badge itself"
-	(2 to: dropdownBadgeContainer children size)
+	(dropdownBadgeContainer children size to: 2 by: -1)
 		do: [ :anIndex | dropdownBadgeContainer removeChildAt: anIndex ].
 		
 	"Update summaries"
