@@ -80,7 +80,7 @@ GtNotificationsBadgeElement >> initializeDropdownBadgeElement [
 			addChild: dropdownBadgeElement;
 			height: 21;
 			hFitContent;
-			background: Color white
+			background: Color orange
 ]
 
 { #category : #initialization }
