@@ -35,6 +35,7 @@ GtNotificationMessageElement >> defaultMessage [
 { #category : #initialization }
 GtNotificationMessageElement >> initialize [
 	super initialize.
+	
 	message := self defaultMessage.
 	self initializeBorderElement.
 	self initializeTextEditor.

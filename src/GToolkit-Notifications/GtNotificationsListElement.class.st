@@ -1,3 +1,8 @@
+"
+{{gtClass:name=GtNotificationsListElement}} shows a list of notifications using custom widgets.
+
+Each notification instance, subclassing {{gtClass:name=GtNotificationEvent}}, can override {{gtMethod:name=GtNotificationEvent>>#elementClass}} to indicate a widget for displaying that notification to the user. These widgets are graphical elements that subclass from {{gtClass:name=GtNotificationElement}}.
+"
 Class {
 	#name : #GtNotificationsListElement,
 	#superclass : #GtNotificationsElement,

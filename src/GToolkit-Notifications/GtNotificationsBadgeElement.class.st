@@ -181,6 +181,7 @@ GtNotificationsBadgeElement >> updateDropdownBadgeContainer [
 { #category : #'private - updating' }
 GtNotificationsBadgeElement >> updateElement [
 	super updateElement.
+	
 	self updateBadgeContainer.
 	self badgeElement text: self notificationsCount.
 	self updateDropdownBadgeContainer.
