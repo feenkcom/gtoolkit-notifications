@@ -1,3 +1,8 @@
+"
+{{gtClass:GtNotificationsElement}} is an element that holds a list of  {{gtClass:name=GtNotifications}} and reacts to changes in that list.
+
+Subclasses should override {{gtMethod:name=GtNotificationsElement>>#updateElement|label=#selector}} to specify how the element should update when notifications change. The actual update of the element is done using a {{gtClass:BrElementUpdater}}.
+"
 Class {
 	#name : #GtNotificationsElement,
 	#superclass : #GtNotificationElement,
@@ -28,6 +33,7 @@ GtNotificationsElement >> gtNotificationsFor: aView [
 { #category : #initialization }
 GtNotificationsElement >> initialize [
 	super initialize.
+	
 	notifications := GtNotifications new.
 	updater := BrElementUpdater new 
 		postponedDuration: 100 milliSeconds;
