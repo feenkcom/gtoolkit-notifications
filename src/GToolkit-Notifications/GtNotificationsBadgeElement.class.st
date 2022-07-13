@@ -1,3 +1,14 @@
+"
+{{gtClass:GtNotificationsBadgeElement}} shows a {{gtClass:GtNotifications}} list using a dropdown that displays a badge with the summary when collapsed, and the list of notifications when expanded.
+
+To show the list of notifications when the dropdown is expanded it delegates to a {{gtClass:name=GtNotificationsListElement}}. 
+For the content of the badge is displays:
+	- the number of notifications
+	- a set of summaries for groups of notifications of the same type ({{gtMethod:name=GtNotificationsBadgeElement>>notificationsGroupedBySummaryClass|label=#selector}}).
+	
+For the summary, all notifications that have the same summary (return the same value for {{gtMethod:GtNotificationEvent>>summaryClass}}) are grouped together and displayed using a {{gtClass:name=GtNotificationSummary}}.
+
+"
 Class {
 	#name : #GtNotificationsBadgeElement,
 	#superclass : #GtNotificationsElement,
@@ -149,7 +160,9 @@ GtNotificationsBadgeElement >> updateBadgeContainer [
 	self addChild: self badgeContainer as: #badge.
 
 	self notificationsGroupedBySummaryClass
-		keysAndValuesDo: [ :aSummary :aNotificationsCollection | badgeContainer addChild: (aSummary new notifications: aNotificationsCollection) ]
+		keysAndValuesDo: [ :aSummaryClass :aNotificationsCollection | 
+			badgeContainer addChild: (aSummaryClass new 
+				notifications: aNotificationsCollection) ]
 ]
 
 { #category : #'private - updating' }
