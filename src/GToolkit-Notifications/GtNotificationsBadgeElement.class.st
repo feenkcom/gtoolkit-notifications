@@ -133,6 +133,11 @@ GtNotificationsBadgeElement >> newDropdownContent [
 ]
 
 { #category : #'private - updating' }
+GtNotificationsBadgeElement >> notificationSummaryElements [
+	^ self badgeContainer children asArray copyWithoutFirst
+]
+
+{ #category : #'private - updating' }
 GtNotificationsBadgeElement >> notificationsGroupedBySummaryClass [
 	| notificationGroup |
 
@@ -155,6 +160,9 @@ GtNotificationsBadgeElement >> show [
 { #category : #'private - updating' }
 GtNotificationsBadgeElement >> updateBadgeContainer [
 
+	self notificationSummaryElements do: [ :aNotificationSummaryElement |
+		aNotificationSummaryElement unsubscribeFromNotifications ].
+
 	self removeChildNamed: #badge.
 	self initializeBadgeElement.
 	self addChild: self badgeContainer as: #badge.
@@ -168,8 +176,14 @@ GtNotificationsBadgeElement >> updateBadgeContainer [
 { #category : #'private - updating' }
 GtNotificationsBadgeElement >> updateDropdownBadgeContainer [
 	"Remove summaries, but not the badge itself"
-	(dropdownBadgeContainer children size to: 2 by: -1)
-		do: [ :anIndex | dropdownBadgeContainer removeChildAt: anIndex ].
+	dropdownBadgeContainer children size 
+		to: 2 
+		by: -1
+		do: [ :anIndex | 
+			| aNotificationSummaryElement |
+			aNotificationSummaryElement := dropdownBadgeContainer childAt: anIndex.
+			aNotificationSummaryElement unsubscribeFromNotifications.
+			dropdownBadgeContainer removeChildAt: anIndex ].
 		
 	"Update summaries"
 	self notificationsGroupedBySummaryClass
@@ -181,6 +195,7 @@ GtNotificationsBadgeElement >> updateDropdownBadgeContainer [
 { #category : #'private - updating' }
 GtNotificationsBadgeElement >> updateElement [
 	super updateElement.
+	
 	self updateBadgeContainer.
 	self badgeElement text: self notificationsCount.
 	self updateDropdownBadgeContainer.

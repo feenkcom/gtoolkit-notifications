@@ -56,6 +56,7 @@ GtNotificationsElement >> notifications [
 { #category : #'api - accessing' }
 GtNotificationsElement >> notifications: aGtNotifications [
 	self assertNotifications: aGtNotifications.
+	
 	notifications = aGtNotifications ifTrue: [ ^ self ].
 	self unsubscribeFromNotifications.
 	notifications := aGtNotifications.

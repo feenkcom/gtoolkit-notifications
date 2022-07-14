@@ -29,9 +29,9 @@ GtNotificationEventElement >> assertNotification: aGtNotificationEvent [
 
 { #category : #'api - actions' }
 GtNotificationEventElement >> dismiss [
-	| theEvent |
 	self
 		notificationDo: [ :aNotification | 
+			| theEvent |
 			aNotification requestRemoval.
 			self
 				fireEvent:
@@ -86,12 +86,12 @@ GtNotificationEventElement >> notification [
 { #category : #'api - accessing' }
 GtNotificationEventElement >> notification: aGtNotificationEvent [
 	self assertNotification: aGtNotificationEvent.
+	
 	notification = aGtNotificationEvent ifTrue: [ ^ self ].
 	self unsubscribeFromNotification.
 	notification := aGtNotificationEvent.
 	self subscribeToNotification.
 	self onNotificationChanged.
-	
 ]
 
 { #category : #'private - accessing' }
