@@ -14,7 +14,7 @@ GtNotificationSummary >> initialize [
 	
 	updater := BrElementUpdater new
 		element: self
-		selector: #onNotificationsChanged.
+		selector: #updateSummaryContent.
 ]
 
 { #category : #accessing }
@@ -24,16 +24,39 @@ GtNotificationSummary >> notifications [
 
 { #category : #accessing }
 GtNotificationSummary >> notifications: aCollection [
+	self assert: [ aCollection notNil ].
+	
+	notifications ifNotNil: [ 
+		self unsubscribeFromNotifications].
+
+
 	notifications := aCollection.
-	self requestUpdate
+	self subscribeToNotifications.
+	
+	self onNotificationsChanged
 ]
 
 { #category : #accessing }
 GtNotificationSummary >> onNotificationsChanged [
-	"implemented by subclasses"
+	self requestUpdate
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 GtNotificationSummary >> requestUpdate [
 	updater requestUpdate
+]
+
+{ #category : #subscriptions }
+GtNotificationSummary >> subscribeToNotifications [
+	"Subclasses can decide to subscribe to announcements from their domain"
+]
+
+{ #category : #subscriptions }
+GtNotificationSummary >> unsubscribeFromNotifications [
+	"Subclasses should unsubscribe from domain announcements"
+]
+
+{ #category : #updating }
+GtNotificationSummary >> updateSummaryContent [
+	"Implemented by subclasses to update the content of the summary"
 ]
