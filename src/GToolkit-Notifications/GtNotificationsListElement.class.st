@@ -43,7 +43,8 @@ GtNotificationsListElement >> initializeList [
 GtNotificationsListElement >> initializeListeners [
 	self 
 		when: GtNotificationDismissWish 
-		do: [ :anEvent | self onNotificationDismissWish: anEvent notification.
+		do: [ :anEvent | 
+			self onNotificationDismissWish: anEvent notification.
 			anEvent consumed: true. ]
 ]
 
