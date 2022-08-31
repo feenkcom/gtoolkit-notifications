@@ -29,7 +29,6 @@ GtNotificationSummary >> notifications: aCollection [
 	notifications ifNotNil: [ 
 		self unsubscribeFromNotifications].
 
-
 	notifications := aCollection.
 	self subscribeToNotifications.
 	
