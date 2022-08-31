@@ -41,6 +41,12 @@ GtNotificationEvent >> message [
 	^ self printString
 ]
 
+{ #category : #notifications }
+GtNotificationEvent >> notifyNotificationDataChanged [
+	self announce: (GtNotificationDataChangedAnnouncement new
+		notification: self)
+]
+
 { #category : #'api - subscriptions' }
 GtNotificationEvent >> onRemovalRequestSend: aSelector to: aReceiver [
 	self announcer 
