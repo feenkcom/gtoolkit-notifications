@@ -1,6 +1,6 @@
 Class {
 	#name : #GtNotificationDataChangedAnnouncement,
-	#superclass : #Object,
+	#superclass : #Announcement,
 	#instVars : [
 		'notification'
 	],
