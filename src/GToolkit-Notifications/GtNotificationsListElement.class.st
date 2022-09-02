@@ -36,6 +36,8 @@ GtNotificationsListElement >> initializeList [
 		itemStencil: [ :anEventElementClass :aListWidget | anEventElementClass new ];
 		itemDataBinder:[ :aNotificationElement :aNotificationEvent :anItemIndex | 
 			aNotificationElement notification: aNotificationEvent ];
+		itemDataUnbinder: [ :aNotificationElement | 
+			aNotificationElement actOnElementDetached ];
 		items: self listItems
 ]
 

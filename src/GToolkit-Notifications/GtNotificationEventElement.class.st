@@ -20,11 +20,24 @@ GtNotificationEventElement class >> notification: aNotificationEvent [
 	^ self new notification: aNotificationEvent
 ]
 
+{ #category : #callbacks }
+GtNotificationEventElement >> actOnElementDetached [
+	"Callback notifying the element that it was detached from the list of notifications.
+	Elements can use this event to detach their model to avoid holding on to data and 
+	prevent it from being garbaged collected"
+]
+
 { #category : #'private - asserting' }
 GtNotificationEventElement >> assertNotification: aGtNotificationEvent [
 	self 
 		assert: [ aGtNotificationEvent isNotNil ] 
 		description: [ 'Notification event must be non-nil' ].
+]
+
+{ #category : #actions }
+GtNotificationEventElement >> clearNotification [
+	self unsubscribeFromNotification.
+	notification := nil
 ]
 
 { #category : #'api - actions' }
