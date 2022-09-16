@@ -10,16 +10,16 @@ BaselineOfGToolkitNotifications >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'Bloc' with: [
-				spec repository: 'github://feenkcom/Bloc:v0.8.402/src' ].
+				spec repository: 'github://feenkcom/Bloc:v0.8.403/src' ].
 		spec
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.8.693/src' ].
+				spec repository: 'github://feenkcom/Brick:v0.8.694/src' ].
 		spec
 			baseline: 'GToolkitDebugger' with: [
-				spec repository: 'github://feenkcom/gtoolkit-debugger:v0.8.1161/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-debugger:v0.8.1162/src' ].
 		spec
 			baseline: 'GToolkitCoder' with: [
-				spec repository: 'github://feenkcom/gtoolkit-coder:v0.8.917/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-coder:v0.8.918/src' ].
 
 		spec package: 'GToolkit-Notifications' with: [
 			spec requires: #('Bloc' 'Brick' 'GToolkitCoder' 'GToolkitDebugger') ].
