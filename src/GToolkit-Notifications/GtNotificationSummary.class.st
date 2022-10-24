@@ -15,6 +15,7 @@ GtNotificationSummary >> initialize [
 	updater := BrElementUpdater new
 		element: self
 		selector: #updateSummaryContent.
+	updater postponedDuration: 1 seconds.
 ]
 
 { #category : #accessing }
