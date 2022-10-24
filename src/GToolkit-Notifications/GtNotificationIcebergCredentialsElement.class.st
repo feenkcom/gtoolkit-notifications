@@ -66,15 +66,15 @@ GtNotificationIcebergCredentialsElement >> closeDialog [
 ]
 
 { #category : #'private - accessing' }
-GtNotificationIcebergCredentialsElement >> credentialStoreDo: aBlock [
-	self notificationDo: [ :aNotification |
-		aNotification credentialStore ifNotNil: aBlock ]
-]
-
-{ #category : #'private - accessing' }
 GtNotificationIcebergCredentialsElement >> credentialsDo: aBlock [
 	self notificationDo: [ :aNotification |
 		aNotification credentials ifNotNil: aBlock ]
+]
+
+{ #category : #'private - accessing' }
+GtNotificationIcebergCredentialsElement >> credentialStoreDo: aBlock [
+	self notificationDo: [ :aNotification |
+		aNotification credentialStore ifNotNil: aBlock ]
 ]
 
 { #category : #initialization }

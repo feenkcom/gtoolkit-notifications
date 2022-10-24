@@ -133,17 +133,17 @@ GtNotificationsBadgeElement >> newDropdownContent [
 ]
 
 { #category : #'private - updating' }
-GtNotificationsBadgeElement >> notificationSummaryElements [
-	^ self badgeContainer children asArray copyWithoutFirst
-]
-
-{ #category : #'private - updating' }
 GtNotificationsBadgeElement >> notificationsGroupedBySummaryClass [
 	| notificationGroup |
 
 	notificationGroup := self notifications asArray groupedBy: #summaryClass.
 	notificationGroup removeKey: nil ifAbsent: [].
 	^ notificationGroup
+]
+
+{ #category : #'private - updating' }
+GtNotificationsBadgeElement >> notificationSummaryElements [
+	^ self badgeContainer children asArray copyWithoutFirst
 ]
 
 { #category : #accessing }
