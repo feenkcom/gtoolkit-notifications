@@ -47,18 +47,6 @@ GtNotificationIcebergCredentials >> cancelCallback: anObject [
 ]
 
 { #category : #'api - accessing' }
-GtNotificationIcebergCredentials >> credentials [
-	"Return credentials that are expected to be filled (initialiezd) by a user"
-	<return: #IceAbstractCredentials>
-	^ credentials
-]
-
-{ #category : #'api - accessing' }
-GtNotificationIcebergCredentials >> credentials: anObject [
-	credentials := anObject
-]
-
-{ #category : #'api - accessing' }
 GtNotificationIcebergCredentials >> credentialStore [
 	"Return a store in which a user credentials can be stored"
 	<return: #IceCredentialStore>
@@ -68,6 +56,18 @@ GtNotificationIcebergCredentials >> credentialStore [
 { #category : #'api - accessing' }
 GtNotificationIcebergCredentials >> credentialStore: aIceCredentialStore [
 	credentialStore := aIceCredentialStore
+]
+
+{ #category : #'api - accessing' }
+GtNotificationIcebergCredentials >> credentials [
+	"Return credentials that are expected to be filled (initialiezd) by a user"
+	<return: #IceAbstractCredentials>
+	^ credentials
+]
+
+{ #category : #'api - accessing' }
+GtNotificationIcebergCredentials >> credentials: anObject [
+	credentials := anObject
 ]
 
 { #category : #defaults }
