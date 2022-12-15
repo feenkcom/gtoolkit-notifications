@@ -4,16 +4,15 @@ Class {
 	#category : #BaselineOfGToolkitNotificationsExamples
 }
 
-{ #category : #baselines }
+{ #category : #baseline }
 BaselineOfGToolkitNotificationsExamples >> baseline: spec [
 	<baseline>
-	spec
-		for: #common
-		do: [ spec
-				baseline: 'GToolkitNotifications'
-					with: [ spec repository: 'github://feenkcom/gtoolkit-notifications:main/src' ].
+	spec for: #'common' do: [
+		spec
+			baseline: 'GToolkitNotifications' with: [
+				spec repository: 'github://feenkcom/gtoolkit-notifications:v0.6.510/src' ].
 
-			spec
-				package: 'GToolkit-Notifications-Examples'
-				with: [ spec requires: #(GToolkitNotifications) ] ]
+		spec package: 'GToolkit-Notifications-Examples' with: [
+			spec requires: #('GToolkitNotifications') ].
+	]
 ]
