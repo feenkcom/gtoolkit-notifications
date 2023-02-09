@@ -21,7 +21,7 @@ GtObjectNotificationMessageElement >> inspectObject [
 	self notificationDo: [ :aNotification |
 		GtInspectorTool
 			openWrappedOn: aNotification object
-			title: 'Exception'
+			title: aNotification message
 			from: self ].
 ]
 
@@ -34,4 +34,13 @@ GtObjectNotificationMessageElement >> newInspectButton [
 		icon: BrGlamorousVectorIcons inspect;
 		label: 'Inspect attached object' translated.
 
+]
+
+{ #category : #accessing }
+GtObjectNotificationMessageElement >> subscribeToNotification [
+	self notificationDo: [ :aNotification | 
+		aNotification
+			when: GtNotificationDataChangedAnnouncement
+			send: #onNotificationChanged
+			to: self ]
 ]
