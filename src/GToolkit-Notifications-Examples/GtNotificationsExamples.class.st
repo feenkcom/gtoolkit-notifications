@@ -47,6 +47,12 @@ GtNotificationsExamples >> notificationsWithJob_Run [
 ]
 
 { #category : #'examples - job' }
+GtNotificationsExamples >> objectNotification [
+	<gtExample>
+	^ GtNotificationObjectMessageExamples new notificationEvent
+]
+
+{ #category : #'examples - job' }
 GtNotificationsExamples >> removeJobNotification [
 	<gtExample>
 	| aCollection aNotification |

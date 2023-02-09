@@ -89,6 +89,37 @@ GtNotificationBadgeByScripterExamples >> displayInformNotification [
 ]
 
 { #category : #'examples - inform message' }
+GtNotificationBadgeByScripterExamples >> displayObjectNotification [
+	<gtExample>
+	| aScripter |
+	aScripter := self objectNotificationInSpace.
+	
+	self clickOnBadgeIn: aScripter do: [ :aStep |
+		aStep check
+			label: 'Check anchored badge list';
+			satisfies: [ :aList | aList listElement items size = 1 ];
+			onTarget: [ :theCheckStep |
+				self dropdownListElementTarget: theCheckStep ].
+
+		aStep check
+			label: 'Check anchored badge label';
+			satisfies: [ :aBadge | 
+				(aBadge isKindOf: BrLabel) and: [
+					aBadge text asString = '1' ] ];
+			onTarget: [ :theCheckStep |
+				self dropdownBadgeElementTarget: theCheckStep ].
+				
+		aStep check
+			label: 'Check element type';
+			onSpaceRoot;
+			// GtObjectNotificationMessageElement;
+			satisfies: [ :aNotificationElement | 
+				aNotificationElement notification message = 'An object to inspect' ] ].
+	
+	^ aScripter syncContinue
+]
+
+{ #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> dropdownBadgeElementTarget: aStep [
 	<gtExample>
 	aStep
@@ -167,6 +198,47 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 					aSpace root userData at: #exampleSpaceId ifAbsent: [ nil ] ]
 				equals: [ :aSpace | aSpace id ];
 				onSpace.
+			
+			aStep check
+				label: 'Check two elements in space';
+				value: [ :aRootElement | aRootElement children size ]
+				equals: 2;
+				onSpaceRoot.
+
+			aStep check
+				label: 'Check notification badge existence';
+				value: [ :aRootElement | (aRootElement childAt: 2) class ]
+				equals: GtNotificationsBadgeElement;
+				onSpaceRoot.
+								
+			aStep check
+				label: 'Check notification badge label';
+				satisfies: [ :aBadgeElement |
+					aBadgeElement badgeElement text asString = '1' ];
+				onSpaceRoot;
+				onChildAt: 2 ].
+	
+	^ aScripter syncContinue
+]
+
+{ #category : #'examples - object message' }
+GtNotificationBadgeByScripterExamples >> objectNotificationInSpace [
+	<gtExample>
+	| aScripter |
+	aScripter := self scripter.
+	aScripter set 
+		label: 'Initialize Space Content';
+		element: [ BlElement new ];
+		play .
+	
+	aScripter space showNotification: (GtNotificationObjectMessageExamples new 
+		notificationEvent).
+	
+	aScripter syncContinue.
+	
+	aScripter 
+		substep: 'Show notification'
+		do: [ :aStep | 
 			
 			aStep check
 				label: 'Check two elements in space';
