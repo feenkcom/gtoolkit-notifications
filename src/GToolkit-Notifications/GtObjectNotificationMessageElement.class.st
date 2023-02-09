@@ -35,3 +35,12 @@ GtObjectNotificationMessageElement >> newInspectButton [
 		label: 'Inspect attached object' translated.
 
 ]
+
+{ #category : #accessing }
+GtObjectNotificationMessageElement >> subscribeToNotification [
+	self notificationDo: [ :aNotification | 
+		aNotification
+			when: GtNotificationDataChangedAnnouncement
+			send: #onNotificationChanged
+			to: self ]
+]

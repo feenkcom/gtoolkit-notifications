@@ -19,6 +19,13 @@ GtObjectNotificationMessage >> elementClass [
 ]
 
 { #category : #accessing }
+GtObjectNotificationMessage >> message: aString [
+
+	super message: aString.
+	self notifyNotificationDataChanged.
+]
+
+{ #category : #accessing }
 GtObjectNotificationMessage >> object [
 	^ object
 ]
