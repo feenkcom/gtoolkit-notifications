@@ -21,7 +21,7 @@ GtObjectNotificationMessageElement >> inspectObject [
 	self notificationDo: [ :aNotification |
 		GtInspectorTool
 			openWrappedOn: aNotification object
-			title: 'Exception'
+			title: aNotification message
 			from: self ].
 ]
 
