@@ -17,7 +17,7 @@ GtNotifications >> addNotification: aNotification [
 		collection addFirst: aNotification.
 		aNotification onRemovalRequestSend: #onRemovalRequest: to: self.
 		aNotification addedTo: self ].
-	self notifyNotificationsChanged.
+	self notifyNotificationsAddedFor: aNotification.
 ]
 
 { #category : #announcer }
@@ -41,6 +41,7 @@ GtNotifications >> do: aBlock [
 GtNotifications >> gtNotificationsFor: aView [
 	<gtView>
 	collection ifNil: [ ^ aView empty ].
+	
 	^ aView list
 		title: 'Notifications';
 		items: [ self asArray ];
@@ -56,8 +57,17 @@ GtNotifications >> initialize [
 ]
 
 { #category : #'private - notifying' }
-GtNotifications >> notifyNotificationsChanged [
-	self announce: (GtNotificationsChangedAnnouncement new notifications: self)
+GtNotifications >> notifyNotificationsAddedFor: aNotification [
+	self announce: (GtNotificationAddedAnnouncement new 
+		notifications: self;
+		addedNotification: aNotification)
+]
+
+{ #category : #'private - notifying' }
+GtNotifications >> notifyNotificationsRemovedFor: aNotification [
+	self announce: (GtNotificationRemovedAnnouncement new
+		notifications: self;
+		removedNotification: aNotification)
 ]
 
 { #category : #'private - announcement handling' }
@@ -72,7 +82,8 @@ GtNotifications >> removeNotification: aNotification [
 			remove: aNotification
 			ifAbsent: [ "ignore" ^ self ].
 		aNotification unsubscribe: self ].
-	self notifyNotificationsChanged.
+		
+	self notifyNotificationsRemovedFor: aNotification
 ]
 
 { #category : #'api - accessing' }

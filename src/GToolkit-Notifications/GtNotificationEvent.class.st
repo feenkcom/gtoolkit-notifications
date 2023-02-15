@@ -1,6 +1,9 @@
 Class {
 	#name : #GtNotificationEvent,
 	#superclass : #GtAnnouncingNotification,
+	#instVars : [
+		'shouldShowNotifications'
+	],
 	#category : #'GToolkit-Notifications-Basic'
 }
 
@@ -58,6 +61,19 @@ GtNotificationEvent >> onRemovalRequestSend: aSelector to: aReceiver [
 { #category : #'api - announcements' }
 GtNotificationEvent >> requestRemoval [
 	self announce: (GtNotificationRemovalRequest notification: self)
+]
+
+{ #category : #'api - accessing' }
+GtNotificationEvent >> shouldShowNotifications [
+	^ shouldShowNotifications ifNil: [ false ]
+]
+
+{ #category : #'api - configuration' }
+GtNotificationEvent >> showNotifications [
+	"Indicates that the list holding notifications should be 
+	automatically shown when this notification is received."
+	
+	shouldShowNotifications := true
 ]
 
 { #category : #accessing }

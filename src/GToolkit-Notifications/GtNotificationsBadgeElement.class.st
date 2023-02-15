@@ -22,6 +22,16 @@ Class {
 	#category : #'GToolkit-Notifications-Badge'
 }
 
+{ #category : #accessing }
+GtNotificationsBadgeElement >> actOnNotificationAddedFor: anAnnouncement [
+	super actOnNotificationAddedFor: anAnnouncement.
+	
+	anAnnouncement addedNotification ifNotNil: [ :aNotification |
+		aNotification shouldShowNotifications ifTrue: [
+			badgeContainer dispatchEvent: (BrDropdownShowWish new
+				anchor: badgeContainer) ] ]
+]
+
 { #category : #initialization }
 GtNotificationsBadgeElement >> badgeContainer [
 	^ badgeContainer
