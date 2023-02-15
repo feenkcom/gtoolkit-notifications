@@ -262,6 +262,72 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpace [
 	^ aScripter syncContinue
 ]
 
+{ #category : #'examples - object message' }
+GtNotificationBadgeByScripterExamples >> objectNotificationInSpaceWithAutomaticShow [
+	<gtExample>
+	| aScripter |
+	aScripter := self scripter.
+	aScripter set 
+		label: 'Initialize Space Content';
+		element: [ BlElement new ];
+		play .
+	
+	aScripter space showNotification: (GtNotificationObjectMessageExamples new 
+		notificationEvent) 
+			showNotifications.
+	
+	aScripter syncContinue.
+	
+	aScripter 
+		substep: 'Show notification'
+		do: [ :aStep | 
+			
+			aStep check
+				label: 'Check three elements in space';
+				value: [ :aRootElement | aRootElement children size ]
+				equals: 3;
+				onSpaceRoot.
+
+			aStep check
+				label: 'Check notification badge existence';
+				value: [ :aRootElement | (aRootElement childAt: 2) class ]
+				equals: GtNotificationsBadgeElement;
+				onSpaceRoot.
+								
+			aStep check
+				label: 'Check notification badge label';
+				satisfies: [ :aBadgeElement |
+					aBadgeElement badgeElement text asString = '1' ];
+				onSpaceRoot;
+				onChildAt: 2 ].
+	
+	aScripter 
+		substep: 'Check badge shown' 
+		do: [ :aStep |
+			aStep check
+				label: 'Check anchored badge list';
+				satisfies: [ :aList | aList listElement items size = 1 ];
+				onTarget: [ :theCheckStep |
+					self dropdownListElementTarget: theCheckStep ].
+
+			aStep check
+				label: 'Check anchored badge label';
+				satisfies: [ :aBadge | 
+					(aBadge isKindOf: BrLabel) and: [
+						aBadge text asString = '1' ] ];
+				onTarget: [ :theCheckStep |
+					self dropdownBadgeElementTarget: theCheckStep ].
+				
+			aStep check
+				label: 'Check element type';
+				onSpaceRoot;
+				// GtObjectNotificationMessageElement;
+				satisfies: [ :aNotificationElement | 
+					aNotificationElement notification message = 'An object to inspect' ]].
+	
+	^ aScripter syncContinue
+]
+
 { #category : #'examples - coder' }
 GtNotificationBadgeByScripterExamples >> pharoSnippetCoder [
 	<gtExample>

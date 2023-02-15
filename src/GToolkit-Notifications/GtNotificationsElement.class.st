@@ -13,6 +13,16 @@ Class {
 	#category : #'GToolkit-Notifications-Badge'
 }
 
+{ #category : #callbacks }
+GtNotificationsElement >> actOnNotificationAddedFor: anAnnouncement [
+	self requestUpdate
+]
+
+{ #category : #callbacks }
+GtNotificationsElement >> actOnNotificationRemovedFor: anAnnouncement [
+	self requestUpdate
+]
+
 { #category : #'private - asserting' }
 GtNotificationsElement >> assertNotifications: aGtNotifications [ 
 	self 
@@ -88,8 +98,13 @@ GtNotificationsElement >> requestUpdate [
 { #category : #'private - subscriptions' }
 GtNotificationsElement >> subscribeToNotifications [
 	self notifications 
-		when: GtNotificationsChangedAnnouncement
-		send: #requestUpdate
+		when: GtNotificationAddedAnnouncement
+		send: #actOnNotificationAddedFor:
+		to: self.
+		
+	self notifications 
+		when: GtNotificationRemovedAnnouncement
+		send: #actOnNotificationRemovedFor:
 		to: self
 ]
 
