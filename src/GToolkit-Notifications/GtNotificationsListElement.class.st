@@ -25,7 +25,7 @@ GtNotificationsListElement >> initialize [
 	
 	self addChild: self listElement as: #notifications.
 	
-	self addAptitude: (BrLayoutResizerAptitude inherit inherit: self listElement).
+	self addAptitude: (BrLayoutResizerAptitude new inherit: self listElement).
 ]
 
 { #category : #initialization }
