@@ -15,9 +15,11 @@ GtNotificationBadgeByScripterExamples >> clickOnBadgeIn: aScripterOrStep do: aBl
 			aStep click 
 				label: 'Click on notification badge';
 				onSpaceRoot;
-				onChildAt: 2.
+				onChildAt: 2;
+			play.
 				
-			aStep wait forEmptySpaceTaskQueue.
+			aStep wait forEmptySpaceTaskQueue;
+			play.
 			
 			aBlock cull: aStep ].
 	
@@ -48,20 +50,24 @@ GtNotificationBadgeByScripterExamples >> closeInformNotification [
 					self
 						dropdownListItemElementTarget: theClick
 						itemClass: GtNotificationMessageElement.
-					self closeButtonTarget: theClick ].
-			aStep wait forEmptySpaceTaskQueue.
+					self closeButtonTarget: theClick ];
+			play.
+			aStep wait forEmptySpaceTaskQueue;
+			play.
 
 			aStep check
 				label: 'Check empty list';
 				value: [ :aList | aList listElement items size ] equals: 1;
-				onTarget: [ :theCheck | self dropdownListElementTarget: theCheck ].
+				onTarget: [ :theCheck | self dropdownListElementTarget: theCheck ];
+			play.
 
 			aStep check
 				label: 'Check anchored badge label';
 				satisfies: [ :aBadge | (aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
-				onTarget: [ :theCheckStep | self dropdownBadgeElementTarget: theCheckStep ] ].
+				onTarget: [ :theCheckStep | self dropdownBadgeElementTarget: theCheckStep ];
+			play ].
 
-	^ aScripter syncContinue
+	^ aScripter
 ]
 
 { #category : #'examples - inform message' }
@@ -75,7 +81,8 @@ GtNotificationBadgeByScripterExamples >> displayInformNotification [
 			label: 'Check anchored badge list';
 			satisfies: [ :aList | aList listElement items size = 1 ];
 			onTarget: [ :theCheckStep |
-				self dropdownListElementTarget: theCheckStep ].
+				self dropdownListElementTarget: theCheckStep ];
+			play.
 
 		aStep check
 			label: 'Check anchored badge label';
@@ -83,9 +90,10 @@ GtNotificationBadgeByScripterExamples >> displayInformNotification [
 				(aBadge isKindOf: BrLabel) and: [
 					aBadge text asString = '1' ] ];
 			onTarget: [ :theCheckStep |
-				self dropdownBadgeElementTarget: theCheckStep ] ].
+				self dropdownBadgeElementTarget: theCheckStep ];
+			play ].
 	
-	^ aScripter syncContinue
+	^ aScripter
 ]
 
 { #category : #'examples - inform message' }
@@ -99,7 +107,8 @@ GtNotificationBadgeByScripterExamples >> displayObjectNotification [
 			label: 'Check anchored badge list';
 			satisfies: [ :aList | aList listElement items size = 1 ];
 			onTarget: [ :theCheckStep |
-				self dropdownListElementTarget: theCheckStep ].
+				self dropdownListElementTarget: theCheckStep ];
+			play.
 
 		aStep check
 			label: 'Check anchored badge label';
@@ -107,16 +116,18 @@ GtNotificationBadgeByScripterExamples >> displayObjectNotification [
 				(aBadge isKindOf: BrLabel) and: [
 					aBadge text asString = '1' ] ];
 			onTarget: [ :theCheckStep |
-				self dropdownBadgeElementTarget: theCheckStep ].
+				self dropdownBadgeElementTarget: theCheckStep ];
+			play.
 				
 		aStep check
 			label: 'Check element type';
 			onSpaceRoot;
 			// GtObjectNotificationMessageElement;
 			satisfies: [ :aNotificationElement | 
-				aNotificationElement notification message = 'An object to inspect' ] ].
+				aNotificationElement notification message = 'An object to inspect' ];
+			play ].
 	
-	^ aScripter syncContinue
+	^ aScripter
 ]
 
 { #category : #'examples - inform message' }
@@ -174,13 +185,15 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 		label: 'Check space height';
 		value: [ :aSpace | aSpace height ]
 		equals: 600;
-		onSpace.
+		onSpace;
+			play.
 
 	aScripter check
 		label: 'Check space width';
 		value: [ :aSpace | aSpace width ]
 		equals: 800;
-		onSpace.
+		onSpace;
+			play.
 		
 	aScripter 
 		substep: 'Play code snippet'
@@ -188,37 +201,43 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 		
 			aStep click 
 				label: 'Click on play button';
-				onGtPharoSnippetPlayButton.
+				onGtPharoSnippetPlayButton;
+			play.
 				
-			aStep wait forEmptySpaceTaskQueue.
+			aStep wait forEmptySpaceTaskQueue;
+			play.
 			
 			aStep check 
 				label: 'Check space ID stored in space root element';
 				value: [ :aSpace | 
 					aSpace root userData at: #exampleSpaceId ifAbsent: [ nil ] ]
 				equals: [ :aSpace | aSpace id ];
-				onSpace.
+				onSpace;
+			play.
 			
 			aStep check
 				label: 'Check two elements in space';
 				value: [ :aRootElement | aRootElement children size ]
 				equals: 2;
-				onSpaceRoot.
+				onSpaceRoot;
+			play.
 
 			aStep check
 				label: 'Check notification badge existence';
 				value: [ :aRootElement | (aRootElement childAt: 2) class ]
 				equals: GtNotificationsBadgeElement;
-				onSpaceRoot.
+				onSpaceRoot;
+			play.
 								
 			aStep check
 				label: 'Check notification badge label';
 				satisfies: [ :aBadgeElement |
 					aBadgeElement badgeElement text asString = '1' ];
 				onSpaceRoot;
-				onChildAt: 2 ].
+				onChildAt: 2;
+			play ].
 	
-	^ aScripter syncContinue
+	^ aScripter
 ]
 
 { #category : #'examples - object message' }
@@ -228,13 +247,11 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpace [
 	aScripter := self scripter.
 	aScripter set 
 		label: 'Initialize Space Content';
-		element: [ BlElement new ];
-		play .
+		element: [ BlElement new ].
 	
 	aScripter space showNotification: (GtNotificationObjectMessageExamples new 
 		notificationEvent).
-	
-	aScripter syncContinue.
+	aScripter play.
 	
 	aScripter 
 		substep: 'Show notification'
@@ -244,22 +261,25 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpace [
 				label: 'Check two elements in space';
 				value: [ :aRootElement | aRootElement children size ]
 				equals: 2;
-				onSpaceRoot.
+				onSpaceRoot;
+			play.
 
 			aStep check
 				label: 'Check notification badge existence';
 				value: [ :aRootElement | (aRootElement childAt: 2) class ]
 				equals: GtNotificationsBadgeElement;
-				onSpaceRoot.
+				onSpaceRoot;
+			play.
 								
 			aStep check
 				label: 'Check notification badge label';
 				satisfies: [ :aBadgeElement |
 					aBadgeElement badgeElement text asString = '1' ];
 				onSpaceRoot;
-				onChildAt: 2 ].
+				onChildAt: 2;
+			play ].
 	
-	^ aScripter syncContinue
+	^ aScripter
 ]
 
 { #category : #'examples - object message' }
@@ -269,14 +289,13 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpaceWithAutomaticS
 	aScripter := self scripter.
 	aScripter set 
 		label: 'Initialize Space Content';
-		element: [ BlElement new ];
-		play .
+		element: [ BlElement new ].
 	
 	aScripter space showNotification: (GtNotificationObjectMessageExamples new 
 		notificationEvent) 
 			showNotifications.
 	
-	aScripter syncContinue.
+	aScripter play.
 	
 	aScripter 
 		substep: 'Show notification'
@@ -286,20 +305,23 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpaceWithAutomaticS
 				label: 'Check three elements in space';
 				value: [ :aRootElement | aRootElement children size ]
 				equals: 3;
-				onSpaceRoot.
+				onSpaceRoot;
+			play.
 
 			aStep check
 				label: 'Check notification badge existence';
 				value: [ :aRootElement | (aRootElement childAt: 2) class ]
 				equals: GtNotificationsBadgeElement;
-				onSpaceRoot.
+				onSpaceRoot;
+			play.
 								
 			aStep check
 				label: 'Check notification badge label';
 				satisfies: [ :aBadgeElement |
 					aBadgeElement badgeElement text asString = '1' ];
 				onSpaceRoot;
-				onChildAt: 2 ].
+				onChildAt: 2;
+			play ].
 	
 	aScripter 
 		substep: 'Check badge shown' 
@@ -308,7 +330,8 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpaceWithAutomaticS
 				label: 'Check anchored badge list';
 				satisfies: [ :aList | aList listElement items size = 1 ];
 				onTarget: [ :theCheckStep |
-					self dropdownListElementTarget: theCheckStep ].
+					self dropdownListElementTarget: theCheckStep ];
+			play.
 
 			aStep check
 				label: 'Check anchored badge label';
@@ -316,16 +339,18 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpaceWithAutomaticS
 					(aBadge isKindOf: BrLabel) and: [
 						aBadge text asString = '1' ] ];
 				onTarget: [ :theCheckStep |
-					self dropdownBadgeElementTarget: theCheckStep ].
+					self dropdownBadgeElementTarget: theCheckStep ];
+			play.
 				
 			aStep check
 				label: 'Check element type';
 				onSpaceRoot;
 				// GtObjectNotificationMessageElement;
 				satisfies: [ :aNotificationElement | 
-					aNotificationElement notification message = 'An object to inspect' ]].
+					aNotificationElement notification message = 'An object to inspect' ];
+			play].
 	
-	^ aScripter syncContinue
+	^ aScripter
 ]
 
 { #category : #'examples - coder' }
