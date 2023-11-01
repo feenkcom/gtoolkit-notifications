@@ -14,9 +14,10 @@ Class {
 { #category : #'api - adding / removing' }
 GtNotifications >> addNotification: aNotification [
 	mutex critical: [ 
-		collection addFirst: aNotification.
-		aNotification onRemovalRequestSend: #onRemovalRequest: to: self.
-		aNotification addedTo: self ].
+		(collection includes: aNotification) ifFalse:
+			[ collection addFirst: aNotification.
+			aNotification onRemovalRequestSend: #onRemovalRequest: to: self.
+			aNotification addedTo: self ] ].
 	self notifyNotificationsAddedFor: aNotification.
 ]
 
