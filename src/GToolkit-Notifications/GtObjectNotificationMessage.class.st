@@ -5,7 +5,8 @@ Class {
 	#name : #GtObjectNotificationMessage,
 	#superclass : #GtNotificationMessage,
 	#instVars : [
-		'object'
+		'object',
+		'tooltip'
 	],
 	#category : #'GToolkit-Notifications-Message'
 }
@@ -41,4 +42,14 @@ GtObjectNotificationMessage >> registerNotifications [
 	
 	GtWorld allInstancesDo: [ :world |
 		world showNotification: self ].
+]
+
+{ #category : #accessing }
+GtObjectNotificationMessage >> tooltip [
+	^ tooltip
+]
+
+{ #category : #accessing }
+GtObjectNotificationMessage >> tooltip: aString [
+	tooltip := aString
 ]
