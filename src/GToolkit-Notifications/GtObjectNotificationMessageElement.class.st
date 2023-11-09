@@ -4,24 +4,45 @@ GtObjectNotificationMessageElement displays a {{gtClass:GtObjectNotificationMess
 Class {
 	#name : #GtObjectNotificationMessageElement,
 	#superclass : #GtNotificationMessageElement,
+	#instVars : [
+		'inspectButton'
+	],
 	#category : #'GToolkit-Notifications-Message'
 }
 
+{ #category : #private }
+GtObjectNotificationMessageElement >> buttonTooltipLabel [
+	self notificationDo: [ :aNotification |
+		^ aNotification tooltip ifNil: [
+			self defaultButtonLabel] ].
+	^ self defaultButtonLabel
+]
+
+{ #category : #private }
+GtObjectNotificationMessageElement >> defaultButtonLabel [
+	^ 'Inspect attached object'
+]
+
 { #category : #initialization }
 GtObjectNotificationMessageElement >> initialize [
-
 	super initialize.
+	
+	inspectButton := self newInspectButton.
 	self borderElement containerDo: [ :container |
-		container addChild: self newInspectButton ].
+		container addChild: inspectButton ].
+]
+
+{ #category : #accessing }
+GtObjectNotificationMessageElement >> inspectButton [
+	^ inspectButton
 ]
 
 { #category : #private }
 GtObjectNotificationMessageElement >> inspectObject [
 
 	self notificationDo: [ :aNotification |
-		GtInspectorTool
-			openWrappedOn: aNotification object
-			title: aNotification message
+		GtWorldUtility 
+			showObject: aNotification object 
 			from: self ].
 ]
 
@@ -31,9 +52,14 @@ GtObjectNotificationMessageElement >> newInspectButton [
 	^ BrButton new
 		aptitude: BrGlamorousButtonWithIconAptitude;
 		action:  [ :button | self inspectObject ];
-		icon: BrGlamorousVectorIcons inspect;
-		label: 'Inspect attached object' translated.
+		icon: BrGlamorousVectorIcons inspect.
+]
 
+{ #category : #accessing }
+GtObjectNotificationMessageElement >> onNotificationChanged [
+	super onNotificationChanged.
+	
+	inspectButton label: self buttonTooltipLabel
 ]
 
 { #category : #accessing }

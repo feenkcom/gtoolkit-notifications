@@ -12,6 +12,9 @@ GtNotificationObjectMessageExamples >> notificationElement [
 	element := notification asElement.
 	
 	self assert: element notification equals: notification.
+	self 
+		assert: element inspectButton label asString 
+		equals: 'Inspect the object'.
 	
 	^ element
 ]
@@ -25,7 +28,8 @@ GtNotificationObjectMessageExamples >> notificationEvent [
 	targetObject := Object new.
 	notificationEvent 
 		message: message;
-		object: targetObject.
+		object: targetObject;
+		tooltip: 'Inspect the object'.
 	
 	self assert: notificationEvent message equals: message.
 	self assert: notificationEvent object equals: targetObject.
