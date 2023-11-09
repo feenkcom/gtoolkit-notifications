@@ -41,9 +41,8 @@ GtObjectNotificationMessageElement >> inspectButton [
 GtObjectNotificationMessageElement >> inspectObject [
 
 	self notificationDo: [ :aNotification |
-		GtInspectorTool
-			openWrappedOn: aNotification object
-			title: aNotification message
+		GtWorldUtility 
+			showObject: aNotification object 
 			from: self ].
 ]
 
