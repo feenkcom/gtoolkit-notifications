@@ -48,3 +48,11 @@ GtNotificationMessage >> printOn: aStream [
 		nextPutAll: 'Notification: ';
 		print: self message
 ]
+
+{ #category : #accessing }
+GtNotificationMessage >> registerNotifications [
+	"A different approach would be to show the notification using the UI Manager"
+	
+	GtWorld allInstancesDo: [ :world |
+		world showNotification: self ].
+]

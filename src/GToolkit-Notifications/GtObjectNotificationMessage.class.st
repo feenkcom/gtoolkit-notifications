@@ -37,14 +37,6 @@ GtObjectNotificationMessage >> object: anObject [
 ]
 
 { #category : #accessing }
-GtObjectNotificationMessage >> registerNotifications [
-	"A different approach would be to show the notification using the UI Manager"
-	
-	GtWorld allInstancesDo: [ :world |
-		world showNotification: self ].
-]
-
-{ #category : #accessing }
 GtObjectNotificationMessage >> tooltip [
 	^ tooltip
 ]
