@@ -97,12 +97,12 @@ GtNotificationsElement >> requestUpdate [
 
 { #category : #'private - subscriptions' }
 GtNotificationsElement >> subscribeToNotifications [
-	self notifications 
+	self notifications weak
 		when: GtNotificationAddedAnnouncement
 		send: #actOnNotificationAddedFor:
 		to: self.
 		
-	self notifications 
+	self notifications weak
 		when: GtNotificationRemovedAnnouncement
 		send: #actOnNotificationRemovedFor:
 		to: self
