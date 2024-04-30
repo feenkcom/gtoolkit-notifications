@@ -52,7 +52,7 @@ GtNotificationEvent >> notifyNotificationDataChanged [
 
 { #category : #'api - subscriptions' }
 GtNotificationEvent >> onRemovalRequestSend: aSelector to: aReceiver [
-	self announcer 
+	self announcer weak
 		when: GtNotificationRemovalRequest
 		send: aSelector
 		to: aReceiver

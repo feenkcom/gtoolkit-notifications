@@ -65,7 +65,7 @@ GtObjectNotificationMessageElement >> onNotificationChanged [
 { #category : #accessing }
 GtObjectNotificationMessageElement >> subscribeToNotification [
 	self notificationDo: [ :aNotification | 
-		aNotification
+		aNotification weak
 			when: GtNotificationDataChangedAnnouncement
 			send: #onNotificationChanged
 			to: self ]

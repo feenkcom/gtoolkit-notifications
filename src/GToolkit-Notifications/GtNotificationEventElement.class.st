@@ -46,11 +46,9 @@ GtNotificationEventElement >> dismiss [
 		notificationDo: [ :aNotification | 
 			| theEvent |
 			aNotification requestRemoval.
-			self
-				fireEvent:
-					(theEvent := self dismissWishClass new notification: aNotification).
-			theEvent isConsumed
-				ifFalse: [ self removeFromParent ] ]
+			theEvent := self dismissWishClass new notification: aNotification.
+			self fireEvent: theEvent.
+			theEvent isConsumed ifFalse: [" self visibility: BlVisibility hidden "] ]
 ]
 
 { #category : #'private - accessing' }
