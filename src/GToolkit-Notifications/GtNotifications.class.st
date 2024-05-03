@@ -36,7 +36,7 @@ GtNotifications >> asArray [
 
 { #category : #accessing }
 GtNotifications >> do: aBlock [
-	collection do: aBlock
+	mutex critical: [ collection do: aBlock ]
 ]
 
 { #category : #'gt-extensions' }
@@ -78,12 +78,25 @@ GtNotifications >> onRemovalRequest: anAnnouncement [
 ]
 
 { #category : #'api - adding / removing' }
+GtNotifications >> releaseNotifications [
+	"I am called from
+	{{gtMethod: GtNotificationsBadgeElement >> #onRemovedFromSceneGraph }}. 
+	The purpose is to remove any notification resources, e.g., embedded debuggers
+	when a window is closed. It is assumed that notifications are global and
+	unique for one window (BlSpace)."
+	
+	self asArray do: [ :eachNotification | 
+		self removeNotification: eachNotification ]
+]
+
+{ #category : #'api - adding / removing' }
 GtNotifications >> removeNotification: aNotification [
 	mutex critical: [ 
 		collection 
 			remove: aNotification
 			ifAbsent: [ "ignore" ^ self ].
-		aNotification unsubscribe: self ].
+		aNotification unsubscribe: self.
+		aNotification removedFrom: self ].
 		
 	self notifyNotificationsRemovedFor: aNotification
 ]
@@ -91,5 +104,5 @@ GtNotifications >> removeNotification: aNotification [
 { #category : #'api - accessing' }
 GtNotifications >> size [
 	<return: #Integer>
-	^ collection size
+	^ mutex critical: [ collection size ]
 ]

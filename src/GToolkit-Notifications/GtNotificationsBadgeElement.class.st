@@ -162,6 +162,14 @@ GtNotificationsBadgeElement >> onNotificationsChanged [
 	self listElement notifications: self notifications.
 ]
 
+{ #category : #'hooks - children' }
+GtNotificationsBadgeElement >> onRemovedFromSceneGraph [
+	super onRemovedFromSceneGraph.
+	
+	notifications ifNil: [ ^ self ].
+	notifications releaseNotifications
+]
+
 { #category : #'api - visibility' }
 GtNotificationsBadgeElement >> show [
 	^ self visibility: BlVisibility visible

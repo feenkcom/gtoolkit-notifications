@@ -58,6 +58,13 @@ GtNotificationEvent >> onRemovalRequestSend: aSelector to: aReceiver [
 		to: aReceiver
 ]
 
+{ #category : #'api - hooks' }
+GtNotificationEvent >> removedFrom: aNotifications [
+	"Subclasses can react to notification removal"
+
+	
+]
+
 { #category : #'api - announcements' }
 GtNotificationEvent >> requestRemoval [
 	self announce: (GtNotificationRemovalRequest notification: self)
