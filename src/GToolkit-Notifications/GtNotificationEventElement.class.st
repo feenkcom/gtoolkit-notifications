@@ -47,8 +47,7 @@ GtNotificationEventElement >> dismiss [
 			| theEvent |
 			aNotification requestRemoval.
 			theEvent := self dismissWishClass new notification: aNotification.
-			self fireEvent: theEvent.
-			theEvent isConsumed ifFalse: [" self visibility: BlVisibility hidden "] ]
+			self fireEvent: theEvent ]
 ]
 
 { #category : #'private - accessing' }
