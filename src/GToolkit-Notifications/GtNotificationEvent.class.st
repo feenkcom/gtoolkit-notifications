@@ -58,6 +58,11 @@ GtNotificationEvent >> onRemovalRequestSend: aSelector to: aReceiver [
 		to: aReceiver
 ]
 
+{ #category : #accessing }
+GtNotificationEvent >> registerNotifications [
+	GtWorld allInstancesDo: [ :world | world showNotification: self ]
+]
+
 { #category : #'api - hooks' }
 GtNotificationEvent >> removedFrom: aNotifications [
 	"Subclasses can react to notification removal"
