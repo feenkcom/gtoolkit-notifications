@@ -3,7 +3,8 @@ Class {
 	#superclass : #GtNotificationEvent,
 	#instVars : [
 		'job',
-		'state'
+		'state',
+		'summaryClass'
 	],
 	#category : #'GToolkit-Notifications-Job'
 }
@@ -81,6 +82,16 @@ GtNotificationJob >> subscribeToJob [
 		when: JobEnd 
 		send: #onJobEnd:
 		to: self.
+]
+
+{ #category : #accessing }
+GtNotificationJob >> summaryClass [
+	^ summaryClass
+]
+
+{ #category : #accessing }
+GtNotificationJob >> summaryClass: anObject [
+	summaryClass := anObject
 ]
 
 { #category : #'private - subscriptions' }
