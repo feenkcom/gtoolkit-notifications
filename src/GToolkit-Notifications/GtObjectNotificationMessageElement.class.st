@@ -41,9 +41,7 @@ GtObjectNotificationMessageElement >> inspectButton [
 GtObjectNotificationMessageElement >> inspectObject [
 
 	self notificationDo: [ :aNotification |
-		GtWorldUtility 
-			showObject: aNotification object 
-			from: self ].
+		self phlow showObject: aNotification object ].
 ]
 
 { #category : #private }
