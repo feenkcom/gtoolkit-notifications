@@ -17,7 +17,10 @@ Class {
 		'badgeElement',
 		'dropdownBadgeElement',
 		'badgeContainer',
-		'dropdownBadgeContainer'
+		'dropdownBadgeContainer',
+		'listElementContainer',
+		'clearAllButton',
+		'toolbar'
 	],
 	#category : #'GToolkit-Notifications-Badge'
 }
@@ -43,6 +46,11 @@ GtNotificationsBadgeElement >> badgeElement [
 	^ badgeElement
 ]
 
+{ #category : #'private - accessing' }
+GtNotificationsBadgeElement >> clearAllButton [
+	^ clearAllButton
+]
+
 { #category : #initialization }
 GtNotificationsBadgeElement >> defaultLayout [
 	^ BlFrameLayout new
@@ -61,6 +69,7 @@ GtNotificationsBadgeElement >> dropdownBadgeElement [
 
 { #category : #'api - visibility' }
 GtNotificationsBadgeElement >> hide [
+	clearAllButton visibility: BlVisibility hidden.
 	^ self visibility: BlVisibility hidden
 ]
 
@@ -71,7 +80,7 @@ GtNotificationsBadgeElement >> initialize [
 	self viewModel: BrWidgetModel new.
 	self fitContent.
 	
-	self initializeListElement.
+	self initializeListElementContainer.
 	self initializeDropdownBadgeElement.
 	self initializeBadgeElement.
 	
@@ -95,6 +104,18 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 ]
 
 { #category : #initialization }
+GtNotificationsBadgeElement >> initializeClearAllButton [
+	clearAllButton := BrButton new
+			aptitude: BrGlamorousButtonWithIconAptitude;
+			icon: BrGlamorousVectorIcons close;
+			id: GtMethodCoderSaveActionId;
+			label: 'Clear all notifications';
+			beTinySize;
+			action: [ :aButtonElement :aButtonModel :anEvent | self notifications releaseNotifications ];
+			yourself
+]
+
+{ #category : #initialization }
 GtNotificationsBadgeElement >> initializeDropdownBadgeElement [
 	dropdownBadgeElement := self newBadge text: '0'.
 	dropdownBadgeContainer := BrHorizontalPane new
@@ -114,10 +135,36 @@ GtNotificationsBadgeElement >> initializeListElement [
 		geometry: (BlRoundedRectangleGeometry cornerRadius: 4).
 ]
 
+{ #category : #initialization }
+GtNotificationsBadgeElement >> initializeListElementContainer [
+	self initializeListElement.
+	self initializeToolbar.
+
+	listElementContainer := BrVerticalPane new
+			addChild: listElement;
+			addChild: toolbar;
+			fitContent
+]
+
+{ #category : #initialization }
+GtNotificationsBadgeElement >> initializeToolbar [
+	self initializeClearAllButton.
+	toolbar := BrToolbar new
+			aptitude: BrGlamorousToolbarAptitude;
+			addItem: clearAllButton;
+			padding: (BlInsets top: 0 bottom: 8 left: 8 right: 0 );
+			yourself
+]
+
 { #category : #'private - accessing' }
 GtNotificationsBadgeElement >> listElement [
 	<return: #GtNotificationsListElement>
 	^ listElement.
+]
+
+{ #category : #accessing }
+GtNotificationsBadgeElement >> listElementContainer [
+	^ listElementContainer
 ]
 
 { #category : #'private - instance creation' }
@@ -138,7 +185,7 @@ GtNotificationsBadgeElement >> newDropdownBadge [
 
 { #category : #'private - instance creation' }
 GtNotificationsBadgeElement >> newDropdownContent [
-	^ self listElement
+	^ self listElementContainer
 		removeFromParent
 ]
 
@@ -172,6 +219,7 @@ GtNotificationsBadgeElement >> onRemovedFromSceneGraph [
 
 { #category : #'api - visibility' }
 GtNotificationsBadgeElement >> show [
+	clearAllButton visibility: BlVisibility visible.
 	^ self visibility: BlVisibility visible
 ]
 
