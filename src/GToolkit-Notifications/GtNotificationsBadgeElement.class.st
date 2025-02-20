@@ -19,7 +19,8 @@ Class {
 		'badgeContainer',
 		'dropdownBadgeContainer',
 		'listElementContainer',
-		'clearAllButton'
+		'clearAllButton',
+		'toolbar'
 	],
 	#category : #'GToolkit-Notifications-Badge'
 }
@@ -105,15 +106,10 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeClearAllButton [
 	clearAllButton := BrButton new
-			aptitude: BrTextLabelAptitude new glamorousCodeFont glamorousCodeTinySize
-					+ BrGlamorousButtonIconAptitude + BrGlamorousButtonLayoutAptitude;
-			label: 'clear all' asRopedText;
-			geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
-			border: (BlBorder paint: (Color gray alpha: 1) width: 1);
+			aptitude: BrGlamorousButtonWithIconAptitude;
 			icon: BrGlamorousVectorIcons close;
-			vExact: 20;
-			padding: (BlInsets left: 4 right: 2);
-			margin: (BlInsets top: 4 right: 4);
+			id: GtMethodCoderSaveActionId;
+			label: 'Clear all notifications';
 			beTinySize;
 			action: [ :aButtonElement :aButtonModel :anEvent | self notifications releaseNotifications ];
 			yourself
@@ -141,21 +137,23 @@ GtNotificationsBadgeElement >> initializeListElement [
 
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeListElementContainer [
-	| alignedButton |
 	self initializeListElement.
-	self initializeClearAllButton.
-
-	alignedButton := BlElement new
-			layout: BlLinearLayout horizontal alignTopRight;
-			constraintsDo: [ :c | 
-				c horizontal matchParent.
-				c vertical fitContent ];
-			addChild: clearAllButton.
+	self initializeToolbar.
 
 	listElementContainer := BrVerticalPane new
-			addChild: alignedButton;
 			addChild: listElement;
+			addChild: toolbar;
 			fitContent
+]
+
+{ #category : #initialization }
+GtNotificationsBadgeElement >> initializeToolbar [
+	self initializeClearAllButton.
+	toolbar := BrToolbar new
+			aptitude: BrGlamorousToolbarAptitude;
+			addItem: clearAllButton;
+			padding: (BlInsets top: 0 bottom: 8 left: 8 right: 0 );
+			yourself
 ]
 
 { #category : #'private - accessing' }
