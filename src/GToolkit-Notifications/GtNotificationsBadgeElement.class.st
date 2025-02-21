@@ -138,19 +138,24 @@ GtNotificationsBadgeElement >> initializeListElement [
 
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeListElementContainer [
-	"When there are many notifications, they can only be viewed if the outer container is scrollable."
-	
+	"When there are many notifications, they can only be viewed if the list is scrollable."
+
 	self initializeListElement.
 	self initializeToolbar.
 
-	listElementContainer := BrVerticalPane new
-			addChild: listElement;
-			addChild: toolbar;
-			fitContent.
-			
 	scrollPane := BrScrollPane new
-			aptitude: BrScrollPaneAptitude + BrGlamorousWithVerticalScrollbarAptitude;
-			content: listElementContainer
+			aptitude: BrScrollPaneAptitude 
+				+ BrGlamorousWithVerticalScrollbarAptitude;
+			hFitContent;
+			content: listElement;
+			yourself.
+
+	listElementContainer := BrVerticalPane new
+			addChild: scrollPane;
+			addChild: toolbar;
+			vFitContentLimited;
+			hFitContent;
+			yourself
 ]
 
 { #category : #initialization }
@@ -198,7 +203,7 @@ GtNotificationsBadgeElement >> newDropdownBadge [
 
 { #category : #'private - instance creation' }
 GtNotificationsBadgeElement >> newDropdownContent [
-	^ self scrollPane removeFromParent
+	^ self listElementContainer removeFromParent
 ]
 
 { #category : #'private - updating' }
@@ -283,22 +288,7 @@ GtNotificationsBadgeElement >> updateElement [
 	self badgeElement text: self notificationsCount.
 	self updateDropdownBadgeContainer.
 	self dropdownBadgeElement text: self notificationsCount.
-	"self updateToolbarPosition."
 	self updateVisibility
-]
-
-{ #category : #'private - updating' }
-GtNotificationsBadgeElement >> updateToolbarPosition [
-	"If there are very many notifications, the toolbar needs to be at the top."
-	self notificationsCount < self longListThreshold
-		ifTrue: [ listElementContainer
-				removeChildren;
-				addChild: listElement;
-				addChild: toolbar ]
-		ifFalse: [ listElementContainer
-				removeChildren;
-				addChild: toolbar;
-				addChild: listElement ]
 ]
 
 { #category : #'private - updating' }
