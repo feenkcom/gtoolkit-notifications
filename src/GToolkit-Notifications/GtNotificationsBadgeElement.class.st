@@ -152,7 +152,7 @@ GtNotificationsBadgeElement >> initializeToolbar [
 	toolbar := BrToolbar new
 			aptitude: BrGlamorousToolbarAptitude;
 			addItem: clearAllButton;
-			padding: (BlInsets top: 0 bottom: 8 left: 8 right: 0 );
+			padding: (BlInsets all: 8 );
 			yourself
 ]
 
@@ -165,6 +165,12 @@ GtNotificationsBadgeElement >> listElement [
 { #category : #accessing }
 GtNotificationsBadgeElement >> listElementContainer [
 	^ listElementContainer
+]
+
+{ #category : #'private - updating' }
+GtNotificationsBadgeElement >> longListThreshold [
+	"Threshold for moving the toolbar to the top."
+	^ 10
 ]
 
 { #category : #'private - instance creation' }
@@ -266,7 +272,22 @@ GtNotificationsBadgeElement >> updateElement [
 	self badgeElement text: self notificationsCount.
 	self updateDropdownBadgeContainer.
 	self dropdownBadgeElement text: self notificationsCount.
+	"self updateToolbarPosition."
 	self updateVisibility
+]
+
+{ #category : #'private - updating' }
+GtNotificationsBadgeElement >> updateToolbarPosition [
+	"If there are very many notifications, the toolbar needs to be at the top."
+	self notificationsCount < self longListThreshold
+		ifTrue: [ listElementContainer
+				removeChildren;
+				addChild: listElement;
+				addChild: toolbar ]
+		ifFalse: [ listElementContainer
+				removeChildren;
+				addChild: toolbar;
+				addChild: listElement ]
 ]
 
 { #category : #'private - updating' }
