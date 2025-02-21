@@ -20,7 +20,8 @@ Class {
 		'dropdownBadgeContainer',
 		'listElementContainer',
 		'clearAllButton',
-		'toolbar'
+		'toolbar',
+		'scrollPane'
 	],
 	#category : #'GToolkit-Notifications-Badge'
 }
@@ -137,13 +138,19 @@ GtNotificationsBadgeElement >> initializeListElement [
 
 { #category : #initialization }
 GtNotificationsBadgeElement >> initializeListElementContainer [
+	"When there are many notifications, they can only be viewed if the outer container is scrollable."
+	
 	self initializeListElement.
 	self initializeToolbar.
 
 	listElementContainer := BrVerticalPane new
 			addChild: listElement;
 			addChild: toolbar;
-			fitContent
+			fitContent.
+			
+	scrollPane := BrScrollPane new
+			aptitude: BrScrollPaneAptitude + BrGlamorousWithVerticalScrollbarAptitude;
+			content: listElementContainer
 ]
 
 { #category : #initialization }
@@ -191,8 +198,7 @@ GtNotificationsBadgeElement >> newDropdownBadge [
 
 { #category : #'private - instance creation' }
 GtNotificationsBadgeElement >> newDropdownContent [
-	^ self listElementContainer
-		removeFromParent
+	^ self scrollPane removeFromParent
 ]
 
 { #category : #'private - updating' }
@@ -221,6 +227,11 @@ GtNotificationsBadgeElement >> onRemovedFromSceneGraph [
 	
 	notifications ifNil: [ ^ self ].
 	notifications releaseNotifications
+]
+
+{ #category : #'private - accessing' }
+GtNotificationsBadgeElement >> scrollPane [
+	^ scrollPane
 ]
 
 { #category : #'api - visibility' }
