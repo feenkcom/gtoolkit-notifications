@@ -44,6 +44,14 @@ GtNotificationBadgeByScripterExamples >> closeInformNotification [
 		substep: 'Close notification'
 		do: [ :aStep | 
 			aStep
+				mouseMoveOverStep: [ :s | 
+					s
+						onTarget: [ :theClick | 
+							self
+								dropdownListItemElementTarget: theClick
+								itemClass: GtNotificationMessageElement ] ].
+
+			aStep
 				clickStep: [ :s | 
 					s
 						label: 'Click on close notification button';
@@ -60,14 +68,17 @@ GtNotificationBadgeByScripterExamples >> closeInformNotification [
 				checkStep: [ :s | 
 					s
 						label: 'Check empty list';
-						value: [ :aList | aList listElement items size ] equals: 1;
+						value: [ :aList | 
+								aList listElement items size ]
+							equals: 1;
 						onTarget: [ :theCheck | self dropdownListElementTarget: theCheck ] ].
 
 			aStep
 				checkStep: [ :s | 
 					s
 						label: 'Check anchored badge label';
-						satisfies: [ :aBadge | (aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
+						satisfies: [ :aBadge | 
+							(aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
 						onTarget: [ :theCheckStep | self dropdownBadgeElementTarget: theCheckStep ] ] ].
 
 	^ aScripter
