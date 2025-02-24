@@ -56,7 +56,18 @@ GtNotificationMessageElement >> initialize [
 { #category : #initialization }
 GtNotificationMessageElement >> initializeBorderElement [
 	borderElement := GtNotificationBorderElement new
-		withCloseButtonAction: [ self dismiss ]
+			withCloseButtonAction: [ self dismiss ].
+
+	borderElement
+		childWithId: #closeButton
+		ifFound: [ :closeButton | 
+			closeButton visibility: BlVisibility hidden.
+			borderElement
+				when: BlMouseLeaveEvent
+					do: [ :e | closeButton visibility: BlVisibility hidden ];
+				when: BlMouseEnterEvent
+					do: [ :e | closeButton visibility: BlVisibility visible ] ]
+		ifNone: [  ]
 ]
 
 { #category : #initialization }
