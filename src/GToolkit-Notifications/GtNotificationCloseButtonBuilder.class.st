@@ -45,7 +45,7 @@ GtNotificationCloseButtonBuilder >> closeButtonName [
 { #category : #'private - instance creation' }
 GtNotificationCloseButtonBuilder >> newCloseButton [
 	^ GtInspectorRoundButtonStencil small asElement
-		icon: GtInspectorPlusIconStencil close asElement;
+		icon: BrPlusIconStencil close asElement;
 		elevation: (BlRelativeElevation elevation: 20);
 		constraintsDo: [ :c | 
 			c frame horizontal alignRight.

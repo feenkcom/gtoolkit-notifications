@@ -131,7 +131,7 @@ GtNotificationsBadgeElement >> initializeListElement [
 	listElement := GtNotificationsListElement new
 		hExact: 300;
 		vFitContentLimited;
-		padding: (BlInsets top: 5 right: 0 bottom: 5 left: 0);
+		padding: (BlInsets all: 5);
 		notifications: self notifications;
 		geometry: (BlRoundedRectangleGeometry cornerRadius: 4).
 ]
