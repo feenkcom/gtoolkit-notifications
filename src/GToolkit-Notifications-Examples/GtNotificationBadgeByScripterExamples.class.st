@@ -68,14 +68,17 @@ GtNotificationBadgeByScripterExamples >> closeInformNotification [
 				checkStep: [ :s | 
 					s
 						label: 'Check empty list';
-						notExists;
+						value: [ :aList | 
+								aList listElement items size ]
+							equals: 1;
 						onTarget: [ :theCheck | self dropdownListElementTarget: theCheck ] ].
 
 			aStep
 				checkStep: [ :s | 
 					s
 						label: 'Check anchored badge label';
-						notExists;
+						satisfies: [ :aBadge | 
+							(aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
 						onTarget: [ :theCheckStep | self dropdownBadgeElementTarget: theCheckStep ] ] ].
 
 	^ aScripter
