@@ -68,17 +68,14 @@ GtNotificationBadgeByScripterExamples >> closeInformNotification [
 				checkStep: [ :s | 
 					s
 						label: 'Check empty list';
-						value: [ :aList | 
-								aList listElement items size ]
-							equals: 1;
+						notExists;
 						onTarget: [ :theCheck | self dropdownListElementTarget: theCheck ] ].
 
 			aStep
 				checkStep: [ :s | 
 					s
 						label: 'Check anchored badge label';
-						satisfies: [ :aBadge | 
-							(aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
+						notExists;
 						onTarget: [ :theCheckStep | self dropdownBadgeElementTarget: theCheckStep ] ] ].
 
 	^ aScripter
@@ -149,7 +146,7 @@ GtNotificationBadgeByScripterExamples >> dropdownBadgeElementTarget: aStep [
 	<gtExample>
 	aStep
 		onSpaceRoot;
-		onBreadthFirstChildOfClass: BrAnchoredElement;
+		onDropdown: true;
 		onBreadthFirstChildOfClass: BrLabel.
 	^ aStep
 ]
@@ -159,7 +156,7 @@ GtNotificationBadgeByScripterExamples >> dropdownListElementTarget: aStep [
 	<gtExample>
 	aStep
 		onSpaceRoot;
-		onBreadthFirstChildOfClass: BrAnchoredElement;
+		onDropdown: true;
 		onBreadthFirstChildOfClass: GtNotificationsListElement.
 	^ aStep
 ]
