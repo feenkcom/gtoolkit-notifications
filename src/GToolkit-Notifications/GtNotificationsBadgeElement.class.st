@@ -95,9 +95,9 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 	badgeElement := self newBadge text: '0'.
 	badgeContainer := BrHorizontalPane new
 			addChild: badgeElement;
-			addAptitude: ((BrGlamorousWithDropdownAptitude
+			addAptitude: (BrGlamorousWithDropdownAptitude
 					handle: [ self newDropdownBadge ]
-					content: [ self newDropdownContent ]) preferredExtent: 600 @ 600);
+					content: [ self newDropdownContent ]);
 			height: 21;
 			hFitContent;
 			background: Color orange;

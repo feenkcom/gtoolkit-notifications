@@ -149,7 +149,7 @@ GtNotificationBadgeByScripterExamples >> dropdownBadgeElementTarget: aStep [
 	<gtExample>
 	aStep
 		onSpaceRoot;
-		onBreadthFirstChildOfClass: BrAnchoredElement;
+		onDropdown: false;
 		onBreadthFirstChildOfClass: BrLabel.
 	^ aStep
 ]
@@ -159,7 +159,7 @@ GtNotificationBadgeByScripterExamples >> dropdownListElementTarget: aStep [
 	<gtExample>
 	aStep
 		onSpaceRoot;
-		onBreadthFirstChildOfClass: BrAnchoredElement;
+		onDropdown: false;
 		onBreadthFirstChildOfClass: GtNotificationsListElement.
 	^ aStep
 ]
