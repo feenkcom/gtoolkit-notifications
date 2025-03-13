@@ -21,7 +21,8 @@ Class {
 		'listElementContainer',
 		'clearAllButton',
 		'toolbar',
-		'scrollPane'
+		'scrollPane',
+		'isDropdownVisible'
 	],
 	#category : #'GToolkit-Notifications-Badge'
 }
@@ -95,9 +96,14 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 	badgeElement := self newBadge text: '0'.
 	badgeContainer := BrHorizontalPane new
 			addChild: badgeElement;
-			addAptitude: ((BrGlamorousWithDropdownAptitude
+			addAptitude: ((BrGlamorousWithExplicitDropdownAptitude
 					handle: [ self newDropdownBadge ]
-					content: [ self newDropdownContent ]) preferredExtent: 600 @ 600);
+					content: [ self newDropdownContent ])
+					preferredExtent: 600 @ 600;
+					when: BrDropdownIsVisible
+						do: [ :anEvent | self onDropdownIsVisible: anEvent ];
+					when: BrDropdownIsHidden
+						do: [ :anEvent | self onDropdownIsHidden: anEvent ]);
 			height: 21;
 			hFitContent;
 			background: Color orange;
@@ -168,6 +174,11 @@ GtNotificationsBadgeElement >> initializeToolbar [
 			yourself
 ]
 
+{ #category : #testing }
+GtNotificationsBadgeElement >> isDropdownVisible [
+	^ isDropdownVisible ifNil: [ false ]
+]
+
 { #category : #'private - accessing' }
 GtNotificationsBadgeElement >> listElement [
 	<return: #GtNotificationsListElement>
@@ -218,6 +229,30 @@ GtNotificationsBadgeElement >> notificationsGroupedBySummaryClass [
 	notificationGroup := self notifications asArray groupedBy: #summaryClass.
 	notificationGroup removeKey: nil ifAbsent: [].
 	^ notificationGroup
+]
+
+{ #category : #'event handling' }
+GtNotificationsBadgeElement >> onDropdownIsHidden: anEvent [
+	"This is a hack. We remove badge element and container on every element update.
+	It implies that an openned dropdown is also removed. We therefore need to know 
+	whether the dropdown was opened. Ideally, we would just update the badge elements.
+	See: 
+		- GtNotificationsBadgeElement>>#updateBadgeContainer
+		- GtNotificationsBadgeElement>>#updateElement"
+
+	isDropdownVisible := false
+]
+
+{ #category : #'event handling' }
+GtNotificationsBadgeElement >> onDropdownIsVisible: anEvent [
+	"This is a hack. We remove badge element and container on every element update.
+	It implies that an openned dropdown is also removed. We therefore need to know 
+	whether the dropdown was opened. Ideally, we would just update the badge elements.
+	See: 
+		- GtNotificationsBadgeElement>>#updateBadgeContainer
+		- GtNotificationsBadgeElement>>#updateElement"
+
+	isDropdownVisible := true
 ]
 
 { #category : #accessing }
@@ -288,7 +323,15 @@ GtNotificationsBadgeElement >> updateElement [
 	self badgeElement text: self notificationsCount.
 	self updateDropdownBadgeContainer.
 	self dropdownBadgeElement text: self notificationsCount.
-	self updateVisibility
+	self updateVisibility.
+	
+	"This is a hack. We remove badge element and container on every element update.
+	It implies that an openned dropdown is also removed. We therefore need to know 
+	whether the dropdown was opened. Ideally, we would just update the elements.
+	See: GtNotificationsBadgeElement>>#updateBadgeContainer"
+	self isDropdownVisible ifTrue: [
+		self badgeContainer dispatchEvent: (BrDropdownShowWish new anchor: self badgeContainer)
+	 ]
 ]
 
 { #category : #'private - updating' }
