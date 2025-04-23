@@ -27,7 +27,7 @@ Class {
 	#category : #'GToolkit-Notifications-Badge'
 }
 
-{ #category : #accessing }
+{ #category : #callbacks }
 GtNotificationsBadgeElement >> actOnNotificationAddedFor: anAnnouncement [
 	super actOnNotificationAddedFor: anAnnouncement.
 	
@@ -35,6 +35,16 @@ GtNotificationsBadgeElement >> actOnNotificationAddedFor: anAnnouncement [
 		aNotification shouldShowNotifications ifTrue: [
 			badgeContainer dispatchEvent: (BrDropdownShowWish new
 				anchor: badgeContainer) ] ]
+]
+
+{ #category : #callbacks }
+GtNotificationsBadgeElement >> actOnNotificationRemovedFor: anAnnouncement [
+	super actOnNotificationRemovedFor: anAnnouncement.
+
+	anAnnouncement removedNotification
+		ifNotNil: [ :each | 
+			each shouldHideNotificationsOnRemoval
+				ifTrue: [ badgeContainer dispatchEvent: (BrDropdownHideWish new anchor: badgeContainer) ] ]
 ]
 
 { #category : #initialization }

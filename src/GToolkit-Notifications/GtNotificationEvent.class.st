@@ -2,7 +2,8 @@ Class {
 	#name : #GtNotificationEvent,
 	#superclass : #GtAnnouncingNotification,
 	#instVars : [
-		'shouldShowNotifications'
+		'shouldShowNotifications',
+		'shouldHideNotificationsOnRemoval'
 	],
 	#category : #'GToolkit-Notifications-Basic'
 }
@@ -36,6 +37,14 @@ GtNotificationEvent >> gtLiveFor: aView [
 		title: 'Live';
 		priority: 5;
 		stencil: self
+]
+
+{ #category : #'api - accessing' }
+GtNotificationEvent >> hideNotificationsOnRemoval [
+	"Indicates that the list holding notifications should be 
+	automatically hidden when the notification is removed."
+	
+	shouldHideNotificationsOnRemoval := true
 ]
 
 { #category : #'api - accessing' }
@@ -73,6 +82,11 @@ GtNotificationEvent >> removedFrom: aNotifications [
 { #category : #'api - announcements' }
 GtNotificationEvent >> requestRemoval [
 	self announce: (GtNotificationRemovalRequest notification: self)
+]
+
+{ #category : #'api - accessing' }
+GtNotificationEvent >> shouldHideNotificationsOnRemoval [
+	^ shouldHideNotificationsOnRemoval ifNil: [ false ]
 ]
 
 { #category : #'api - accessing' }
