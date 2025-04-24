@@ -30,11 +30,13 @@ Class {
 { #category : #callbacks }
 GtNotificationsBadgeElement >> actOnNotificationAddedFor: anAnnouncement [
 	super actOnNotificationAddedFor: anAnnouncement.
-	
-	anAnnouncement addedNotification ifNotNil: [ :aNotification |
-		aNotification shouldShowNotifications ifTrue: [
-			badgeContainer dispatchEvent: (BrDropdownShowWish new
-				anchor: badgeContainer) ] ]
+
+	anAnnouncement addedNotification
+		ifNotNil: [ :aNotification | 
+			aNotification shouldShowNotifications
+				ifTrue: [ badgeContainer
+						enqueueTask: [ badgeContainer dispatchEvent: (BrDropdownShowWish new anchor: badgeContainer) ]
+								asBlTask ] ]
 ]
 
 { #category : #callbacks }
@@ -44,7 +46,9 @@ GtNotificationsBadgeElement >> actOnNotificationRemovedFor: anAnnouncement [
 	anAnnouncement removedNotification
 		ifNotNil: [ :each | 
 			each shouldHideNotificationsOnRemoval
-				ifTrue: [ badgeContainer dispatchEvent: (BrDropdownHideWish new anchor: badgeContainer) ] ]
+				ifTrue: [ badgeContainer
+						enqueueTask: [ badgeContainer dispatchEvent: (BrDropdownHideWish new anchor: badgeContainer) ]
+								asBlTask ] ]
 ]
 
 { #category : #initialization }
