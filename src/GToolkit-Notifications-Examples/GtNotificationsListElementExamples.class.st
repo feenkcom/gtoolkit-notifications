@@ -7,6 +7,7 @@ Class {
 { #category : #'examples - list' }
 GtNotificationsListElementExamples >> basicNotificationsElement [
 	<gtExample>
+	<return: #GtNotificationsListElement>
 	| anElement |
 	anElement := GtNotificationsListElement new.
 	self assert: anElement notifications size equals: 0.
@@ -17,11 +18,11 @@ GtNotificationsListElementExamples >> basicNotificationsElement [
 { #category : #'examples - list' }
 GtNotificationsListElementExamples >> notificationsListElement_FiveNotifications [
 	<gtExample>
+	<return: #GtNotificationsListElement>
 	| anElement aNotification |
 	anElement := self notificationsListElement_FourNotifications.
 	aNotification := self debugSessionNotification.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notifications size equals: 5.
 	self assert: anElement listElement items size equals: 5.
 	^ anElement
@@ -30,11 +31,11 @@ GtNotificationsListElementExamples >> notificationsListElement_FiveNotifications
 { #category : #'examples - list' }
 GtNotificationsListElementExamples >> notificationsListElement_FourNotifications [
 	<gtExample>
+	<return: #GtNotificationsListElement>
 	| anElement aNotification |
 	anElement := self notificationsListElement_ThreeNotifications.
 	aNotification := self notificationJobWithTwoChildren.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notifications size equals: 4.
 	self assert: anElement listElement items size equals: 4.
 	^ anElement
@@ -43,11 +44,11 @@ GtNotificationsListElementExamples >> notificationsListElement_FourNotifications
 { #category : #'examples - list' }
 GtNotificationsListElementExamples >> notificationsListElement_OneNotification [
 	<gtExample>
+	<return: #GtNotificationsListElement>
 	| anElement aNotification |
 	anElement := self basicNotificationsElement.
 	aNotification := self notificationMessage.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notifications size equals: 1.
 	self assert: anElement listElement items size equals: 1.
 	^ anElement
@@ -56,11 +57,11 @@ GtNotificationsListElementExamples >> notificationsListElement_OneNotification [
 { #category : #'examples - list' }
 GtNotificationsListElementExamples >> notificationsListElement_ThreeNotifications [
 	<gtExample>
+	<return: #GtNotificationsListElement>
 	| anElement aNotification |
 	anElement := self notificationsListElement_TwoNotifications.
 	aNotification := self notificationJobWithChild.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notifications size equals: 3.
 	self assert: anElement listElement items size equals: 3.
 	^ anElement
@@ -69,11 +70,11 @@ GtNotificationsListElementExamples >> notificationsListElement_ThreeNotification
 { #category : #'examples - list' }
 GtNotificationsListElementExamples >> notificationsListElement_TwoNotifications [
 	<gtExample>
+	<return: #GtNotificationsListElement>
 	| anElement aNotification |
 	anElement := self notificationsListElement_OneNotification.
 	aNotification := self notificationJob.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notifications size equals: 2.
 	self assert: anElement listElement items size equals: 2.
 	^ anElement

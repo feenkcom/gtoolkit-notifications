@@ -15,6 +15,7 @@ GtNotificationDebugSessionExamples >> addSession: aSession [
 { #category : #'examples - debug session' }
 GtNotificationDebugSessionExamples >> basicDebugSessionElement [
 	<gtExample>
+	<return: #GtNotificationDebugSessionElement>
 	| anElement |
 	anElement := GtNotificationDebugSessionElement new.
 	self assert: anElement notification isNil.
@@ -24,6 +25,7 @@ GtNotificationDebugSessionExamples >> basicDebugSessionElement [
 { #category : #'examples - debug session' }
 GtNotificationDebugSessionExamples >> basicDebugSessionEvent [
 	<gtExample>
+	<return: #GtNotificationDebugSession>
 	| anEvent |
 	anEvent := GtNotificationDebugSession new.
 	self assert: anEvent debugSession isNil.
@@ -35,21 +37,23 @@ GtNotificationDebugSessionExamples >> basicDebugSessionEvent [
 GtNotificationDebugSessionExamples >> debugSession [
 	<gtExample>
 	<after: #terminateSessions>
+	<return: #DebugSession>
 	| aContext aProcess aSession |
 	aContext := [ 1 + 1 ] asContext.
-	aProcess := Process 
-	    forContext: aContext 
-	    priority: Processor userInterruptPriority.
-	aSession := aProcess 
-		newDebugSessionNamed: 'Example session' 
-		startedAt: aContext.
+	aProcess := Process
+			forContext: aContext
+			priority: Processor userInterruptPriority.
+	aSession := aProcess
+			newDebugSessionNamed: 'Example session'
+			startedAt: aContext.
 	self addSession: aSession.
-	^ aSession 
+	^ aSession
 ]
 
 { #category : #'examples - debug session' }
 GtNotificationDebugSessionExamples >> debugSessionElement [
 	<gtExample>
+	<return: #GtNotificationDebugSessionElement>
 	| anElement anEvent |
 	anElement := self basicDebugSessionElement.
 	anEvent := self debugSessionNotification.
@@ -61,6 +65,7 @@ GtNotificationDebugSessionExamples >> debugSessionElement [
 { #category : #'examples - debug session' }
 GtNotificationDebugSessionExamples >> debugSessionNotification [
 	<gtExample>
+	<return: #GtNotificationDebugSession>
 	| anEvent aSession |
 	anEvent := self basicDebugSessionEvent.
 	aSession := self sharedDebugSession.
@@ -78,6 +83,7 @@ GtNotificationDebugSessionExamples >> sessions [
 { #category : #'examples - debug session' }
 GtNotificationDebugSessionExamples >> sharedDebugSession [
 	<gtExample>
+	<return: #GtSharedDebugSession>
 	| aSharedSession aPharoSession |
 	aSharedSession := GtSharedDebugSession new.
 	aPharoSession := self debugSession.

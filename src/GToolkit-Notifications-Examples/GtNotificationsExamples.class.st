@@ -7,6 +7,7 @@ Class {
 { #category : #'examples - notifications' }
 GtNotificationsExamples >> emptyNotifications [
 	<gtExample>
+	<return: #GtNotifications>
 	| aCollection |
 	aCollection := GtNotifications new.
 	self assert: aCollection asArray isEmpty.
@@ -16,12 +17,14 @@ GtNotificationsExamples >> emptyNotifications [
 { #category : #'examples - job' }
 GtNotificationsExamples >> jobNotification [
 	<gtExample>
+	<return: #GtNotificationJob>
 	^ GtNotificationJobExamples new notificationJobWithTwoChildren
 ]
 
 { #category : #'examples - job' }
 GtNotificationsExamples >> notificationsWithJob [
 	<gtExample>
+	<return: #GtNotifications>
 	| aCollection aNotification |
 	aCollection := self emptyNotifications.
 	aNotification := self jobNotification.
@@ -35,13 +38,14 @@ GtNotificationsExamples >> notificationsWithJob [
 { #category : #'examples - job' }
 GtNotificationsExamples >> notificationsWithJob_Run [
 	<gtExample>
+	<return: #GtNotifications>
 	| aNotifications aJobNotification aJob |
 	aNotifications := self notificationsWithJob.
 	aJobNotification := aNotifications asArray first.
 	aJob := aJobNotification job.
-	
+
 	aJob run.
-	
+
 	self assert: aNotifications asArray isEmpty.
 	^ aNotifications
 ]
@@ -49,12 +53,14 @@ GtNotificationsExamples >> notificationsWithJob_Run [
 { #category : #'examples - job' }
 GtNotificationsExamples >> objectNotification [
 	<gtExample>
+	<return: #GtObjectNotificationMessage>
 	^ GtNotificationObjectMessageExamples new notificationEvent
 ]
 
 { #category : #'examples - job' }
 GtNotificationsExamples >> removeJobNotification [
 	<gtExample>
+	<return: #GtNotifications>
 	| aCollection aNotification |
 	aCollection := self notificationsWithJob.
 	aNotification := aCollection asArray anyOne.
@@ -67,6 +73,7 @@ GtNotificationsExamples >> removeJobNotification [
 { #category : #'examples - job' }
 GtNotificationsExamples >> requestJobNotificationRemoval [
 	<gtExample>
+	<return: #GtNotifications>
 	| aCollection aNotification |
 	aCollection := self notificationsWithJob.
 	aNotification := aCollection asArray anyOne.

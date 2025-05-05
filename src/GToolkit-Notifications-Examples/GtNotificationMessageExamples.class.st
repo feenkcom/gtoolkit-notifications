@@ -7,6 +7,7 @@ Class {
 { #category : #'examples - message notification' }
 GtNotificationMessageExamples >> basicMessageElement [
 	<gtExample>
+	<return: #GtNotificationMessageElement>
 	| anElement |
 	anElement := GtNotificationMessageElement new.
 	self assert: anElement notification isNil.
@@ -16,6 +17,7 @@ GtNotificationMessageExamples >> basicMessageElement [
 { #category : #'examples - message notification' }
 GtNotificationMessageExamples >> basicMessageEvent [
 	<gtExample>
+	<return: #GtNotificationMessage>
 	| anEvent |
 	anEvent := GtNotificationMessage new.
 	self assert: anEvent message isString.
@@ -26,6 +28,7 @@ GtNotificationMessageExamples >> basicMessageEvent [
 { #category : #'examples - message notification' }
 GtNotificationMessageExamples >> basicNotificationEvent [
 	<gtExample>
+	<return: #GtNotificationEvent>
 	| anEvent |
 	anEvent := GtNotificationEvent new.
 	self assert: (anEvent asElement isKindOf: BlElement).
@@ -35,6 +38,7 @@ GtNotificationMessageExamples >> basicNotificationEvent [
 { #category : #'examples - message notification' }
 GtNotificationMessageExamples >> notificationMessage [
 	<gtExample>
+	<return: #GtNotificationMessage>
 	| anEvent aMessage |
 	anEvent := GtNotificationMessage new.
 	aMessage := 'Hello Glamorous Toolkit'.

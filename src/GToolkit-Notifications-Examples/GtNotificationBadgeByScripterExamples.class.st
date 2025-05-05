@@ -37,6 +37,7 @@ GtNotificationBadgeByScripterExamples >> closeButtonTarget: aStep [
 { #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> closeInformNotification [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self displayInformNotification.
 
@@ -68,17 +69,14 @@ GtNotificationBadgeByScripterExamples >> closeInformNotification [
 				checkStep: [ :s | 
 					s
 						label: 'Check empty list';
-						value: [ :aList | 
-								aList listElement items size ]
-							equals: 1;
+						value: [ :aList | aList listElement items size ] equals: 1;
 						onTarget: [ :theCheck | self dropdownListElementTarget: theCheck ] ].
 
 			aStep
 				checkStep: [ :s | 
 					s
 						label: 'Check anchored badge label';
-						satisfies: [ :aBadge | 
-							(aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
+						satisfies: [ :aBadge | (aBadge isKindOf: BrLabel) and: [ aBadge text asString = '0' ] ];
 						onTarget: [ :theCheckStep | self dropdownBadgeElementTarget: theCheckStep ] ] ].
 
 	^ aScripter
@@ -87,6 +85,7 @@ GtNotificationBadgeByScripterExamples >> closeInformNotification [
 { #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> displayInformNotification [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self informInSpace.
 
@@ -113,6 +112,7 @@ GtNotificationBadgeByScripterExamples >> displayInformNotification [
 { #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> displayObjectNotification [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self objectNotificationInSpace.
 
@@ -176,6 +176,7 @@ GtNotificationBadgeByScripterExamples >> dropdownListItemElementTarget: aStep it
 { #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> informCode [
 	<gtExample>
+	<return: #ByteString>
 	^ '[ BlBlocUIManagerNotification
 	requestOrNil: #inform:
 	with: { ''Example information'' } ] 
@@ -191,6 +192,7 @@ do: [ :aNotification |
 { #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> informInSpace [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self scripterForBlock: [ self snippetWithInformCode ].
 
@@ -258,6 +260,7 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 { #category : #'examples - object message' }
 GtNotificationBadgeByScripterExamples >> objectNotificationInSpace [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self scripter.
 	aScripter set
@@ -300,6 +303,7 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpace [
 { #category : #'examples - object message' }
 GtNotificationBadgeByScripterExamples >> objectNotificationInSpaceWithAutomaticShow [
 	<gtExample>
+	<return: #BlScripter>
 	| aScripter |
 	aScripter := self scripter.
 	aScripter set
@@ -368,6 +372,7 @@ GtNotificationBadgeByScripterExamples >> objectNotificationInSpaceWithAutomaticS
 { #category : #'examples - coder' }
 GtNotificationBadgeByScripterExamples >> pharoSnippetCoder [
 	<gtExample>
+	<return: #GtPharoSnippetCoder>
 	| aCoder |
 	aCoder := GtPharoSnippetCoder new.
 	^ aCoder
@@ -376,6 +381,7 @@ GtNotificationBadgeByScripterExamples >> pharoSnippetCoder [
 { #category : #'examples - inform message' }
 GtNotificationBadgeByScripterExamples >> snippetWithInformCode [
 	<gtExample>
+	<return: #GtPharoSnippetCoder>
 	| aCoder |
 	aCoder := self pharoSnippetCoder.
 	aCoder forSource: self informCode.
