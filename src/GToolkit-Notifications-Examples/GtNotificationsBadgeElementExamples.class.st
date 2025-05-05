@@ -7,6 +7,7 @@ Class {
 { #category : #'examples - badge' }
 GtNotificationsBadgeElementExamples >> basicNotificationBadgeElement [
 	<gtExample>
+	<return: #GtNotificationsBadgeElement>
 	| anElement |
 	anElement := GtNotificationsBadgeElement new.
 	self assert: anElement notificationsCount equals: 0.
@@ -17,11 +18,11 @@ GtNotificationsBadgeElementExamples >> basicNotificationBadgeElement [
 { #category : #'examples - badge' }
 GtNotificationsBadgeElementExamples >> notificationBadgeElement_FiveNotifications [
 	<gtExample>
+	<return: #GtNotificationsBadgeElement>
 	| anElement aNotification |
 	anElement := self notificationBadgeElement_FourNotifications.
 	aNotification := self debugSessionNotification.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notificationsCount equals: 5.
 	^ anElement
 ]
@@ -29,11 +30,11 @@ GtNotificationsBadgeElementExamples >> notificationBadgeElement_FiveNotification
 { #category : #'examples - badge' }
 GtNotificationsBadgeElementExamples >> notificationBadgeElement_FourNotifications [
 	<gtExample>
+	<return: #GtNotificationsBadgeElement>
 	| anElement aNotification |
 	anElement := self notificationBadgeElement_ThreeNotifications.
 	aNotification := self notificationJobWithTwoChildren.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notificationsCount equals: 4.
 	^ anElement
 ]
@@ -41,12 +42,12 @@ GtNotificationsBadgeElementExamples >> notificationBadgeElement_FourNotification
 { #category : #'examples - badge' }
 GtNotificationsBadgeElementExamples >> notificationBadgeElement_HudredNotification [
 	<gtExample>
+	<return: #GtNotificationsBadgeElement>
 	| anElement aNotification |
 	anElement := self basicNotificationBadgeElement.
-	100 timesRepeat: [ 
-		aNotification := self notificationMessage.
-		BlUseAsyncFeatures disableDuring: [
-			anElement notification: aNotification ] ].
+	100
+		timesRepeat: [ aNotification := self notificationMessage.
+			BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ] ].
 	self assert: anElement notificationsCount equals: 100.
 	^ anElement
 ]
@@ -54,11 +55,11 @@ GtNotificationsBadgeElementExamples >> notificationBadgeElement_HudredNotificati
 { #category : #'examples - badge' }
 GtNotificationsBadgeElementExamples >> notificationBadgeElement_OneNotification [
 	<gtExample>
+	<return: #GtNotificationsBadgeElement>
 	| anElement aNotification |
 	anElement := self basicNotificationBadgeElement.
 	aNotification := self notificationMessage.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notificationsCount equals: 1.
 	^ anElement
 ]
@@ -66,11 +67,11 @@ GtNotificationsBadgeElementExamples >> notificationBadgeElement_OneNotification 
 { #category : #'examples - badge' }
 GtNotificationsBadgeElementExamples >> notificationBadgeElement_ThreeNotifications [
 	<gtExample>
+	<return: #GtNotificationsBadgeElement>
 	| anElement aNotification |
 	anElement := self notificationBadgeElement_TwoNotifications.
 	aNotification := self notificationJobWithChild.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notificationsCount equals: 3.
 	^ anElement
 ]
@@ -78,11 +79,11 @@ GtNotificationsBadgeElementExamples >> notificationBadgeElement_ThreeNotificatio
 { #category : #'examples - badge' }
 GtNotificationsBadgeElementExamples >> notificationBadgeElement_TwoNotifications [
 	<gtExample>
+	<return: #GtNotificationsBadgeElement>
 	| anElement aNotification |
 	anElement := self notificationBadgeElement_OneNotification.
 	aNotification := self notificationJob.
-	BlUseAsyncFeatures disableDuring: [
-		anElement notification: aNotification ].
+	BlUseAsyncFeatures disableDuring: [ anElement notification: aNotification ].
 	self assert: anElement notificationsCount equals: 2.
 	^ anElement
 ]

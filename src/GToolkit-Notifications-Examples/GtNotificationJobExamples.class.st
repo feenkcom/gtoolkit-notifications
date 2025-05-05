@@ -7,6 +7,7 @@ Class {
 { #category : #'examples - notification' }
 GtNotificationJobExamples >> basicNotificationJob [
 	<gtExample>
+	<return: #GtNotificationJob>
 	| anEvent |
 	anEvent := GtNotificationJob new.
 	self assert: anEvent job isNil.
@@ -17,6 +18,7 @@ GtNotificationJobExamples >> basicNotificationJob [
 { #category : #'examples - element' }
 GtNotificationJobExamples >> basicNotificationJobElement [
 	<gtExample>
+	<return: #GtNotificationJobElement>
 	| anElement aCurrentJob |
 	anElement := GtNotificationJobElement new.
 	aCurrentJob := 42.
@@ -28,6 +30,7 @@ GtNotificationJobExamples >> basicNotificationJobElement [
 { #category : #'examples - notification' }
 GtNotificationJobExamples >> basicNotificationJobWithChildrenElement [
 	<gtExample>
+	<return: #GtNotificationJobWithChildrenElement>
 	| anElement aCurrentJob |
 	anElement := GtNotificationJobWithChildrenElement new.
 	aCurrentJob := 42.
@@ -39,6 +42,7 @@ GtNotificationJobExamples >> basicNotificationJobWithChildrenElement [
 { #category : #'examples - element' }
 GtNotificationJobExamples >> basicNotificationRootJobElement [
 	<gtExample>
+	<return: #GtNotificationRootJobElement>
 	| anElement aCurrentJob |
 	anElement := GtNotificationRootJobElement new.
 	aCurrentJob := 42.
@@ -50,20 +54,23 @@ GtNotificationJobExamples >> basicNotificationRootJobElement [
 { #category : #'examples - job' }
 GtNotificationJobExamples >> job [
 	<gtExample>
+	<return: #Job>
 	| aJob aBlock |
-	aBlock := [ :theJob |
-		0 to: 1 by: 0.1 do: [ :aNumber | 
-			theJob progress: aNumber ] ].
+	aBlock := [ :theJob | 
+		0
+			to: 1
+			by: 0.1
+			do: [ :aNumber | theJob progress: aNumber ] ].
 	aJob := aBlock asJob.
 	aJob
 		title: 'Job Progress';
 		min: 0;
 		max: 1.
 	self assert: aJob progress equals: 0.
-	
+
 	aJob progress: 0.3.
 	self assert: aJob progress equals: 0.3.
-	
+
 	^ aJob
 ]
 
@@ -89,30 +96,31 @@ GtNotificationJobExamples >> jobAt: theIntermittentNumbers do: anIntermittentBlo
 { #category : #'examples - job' }
 GtNotificationJobExamples >> jobWithChild [
 	<gtExample>
+	<return: #Job>
 	| aParentJob aChildJob |
 	aParentJob := self job.
-	aChildJob := self job
-		title: 'Sub-Job One'.
+	aChildJob := self job title: 'Sub-Job One'.
 	aParentJob addChild: aChildJob.
-	
+
 	^ aParentJob
 ]
 
 { #category : #'examples - job' }
 GtNotificationJobExamples >> jobWithTwoChildren [
 	<gtExample>
+	<return: #Job>
 	| aParentJob aChildJob |
 	aParentJob := self jobWithChild.
-	aChildJob := self job
-		title: 'Sub-Job Two'.
+	aChildJob := self job title: 'Sub-Job Two'.
 	aParentJob addChild: aChildJob.
-	
+
 	^ aParentJob
 ]
 
 { #category : #'examples - notification' }
 GtNotificationJobExamples >> notificationJob [
 	<gtExample>
+	<return: #GtNotificationJob>
 	| anEvent aJob |
 	anEvent := self basicNotificationJob.
 	aJob := self job.
@@ -125,6 +133,7 @@ GtNotificationJobExamples >> notificationJob [
 { #category : #'examples - element' }
 GtNotificationJobExamples >> notificationJobElement [
 	<gtExample>
+	<return: #GtNotificationJobElement>
 	| anElement anEvent aCurrentJob |
 	anElement := self basicNotificationJobElement.
 	anEvent := self notificationJob.
@@ -138,6 +147,7 @@ GtNotificationJobExamples >> notificationJobElement [
 { #category : #'examples - element' }
 GtNotificationJobExamples >> notificationJobElement_runningJob [
 	<gtExample>
+	<return: #GtNotificationJobElement>
 	| anElement aJob aSemaphore aSpace aTimeout anElementSubscriptions |
 	aSemaphore := Semaphore new.
 	anElement := self notificationJobElement.
@@ -156,8 +166,7 @@ GtNotificationJobExamples >> notificationJobElement_runningJob [
 	aJob run.
 	self assert: aJob isRunning not.
 	self assert: aJob progress > 0.99.
-	anElement
-		enqueueTask: (BlTaskAction new action: [ aSemaphore signal ]).
+	anElement enqueueTask: (BlTaskAction new action: [ aSemaphore signal ]).
 	aSpace pulse.
 	aTimeout := aSemaphore waitTimeoutSeconds: 5.
 	self assert: aTimeout not description: [ 'Semaphore timeout' ].
@@ -176,6 +185,7 @@ GtNotificationJobExamples >> notificationJobElement_runningJob [
 { #category : #'examples - notification' }
 GtNotificationJobExamples >> notificationJobWithChild [
 	<gtExample>
+	<return: #GtNotificationJob>
 	| anEvent aJob |
 	anEvent := self basicNotificationJob.
 	aJob := self jobWithChild.
@@ -188,6 +198,7 @@ GtNotificationJobExamples >> notificationJobWithChild [
 { #category : #'examples - element' }
 GtNotificationJobExamples >> notificationJobWithChildrenElement [
 	<gtExample>
+	<return: #GtNotificationJobWithChildrenElement>
 	| anElement anEvent aCurrentJob |
 	anElement := self basicNotificationJobWithChildrenElement.
 	anEvent := self notificationJob.
@@ -201,6 +212,7 @@ GtNotificationJobExamples >> notificationJobWithChildrenElement [
 { #category : #'examples - element' }
 GtNotificationJobExamples >> notificationJobWithChildrenElement_OneChild [
 	<gtExample>
+	<return: #GtNotificationJobWithChildrenElement>
 	| anElement anEvent aCurrentJob |
 	anElement := self basicNotificationJobWithChildrenElement.
 	anEvent := self notificationJob.
@@ -215,6 +227,7 @@ GtNotificationJobExamples >> notificationJobWithChildrenElement_OneChild [
 { #category : #'examples - notification' }
 GtNotificationJobExamples >> notificationJobWithTwoChildren [
 	<gtExample>
+	<return: #GtNotificationJob>
 	| anEvent aJob |
 	anEvent := self basicNotificationJob.
 	aJob := self jobWithTwoChildren.
@@ -227,6 +240,7 @@ GtNotificationJobExamples >> notificationJobWithTwoChildren [
 { #category : #'examples - element' }
 GtNotificationJobExamples >> notificationRootJobElement [
 	<gtExample>
+	<return: #GtNotificationRootJobElement>
 	| anElement anEvent aCurrentJob |
 	anElement := self basicNotificationRootJobElement.
 	anEvent := self notificationJob.
@@ -240,15 +254,17 @@ GtNotificationJobExamples >> notificationRootJobElement [
 { #category : #'examples - job' }
 GtNotificationJobExamples >> parentJob [
 	<gtExample>
+	<return: #Job>
 	| aJob aBlock |
-	aBlock := [ :theJob |
-		0 to: 1 by: 0.1 do: [ :aNumber | 
-			theJob progress: aNumber.
-			300 milliSeconds wait.
-			"Run a child job"
-			aNumber = 0.5 ifTrue: [ 
-				self job run ] ] ].
-	
+	aBlock := [ :theJob | 
+		0
+			to: 1
+			by: 0.1
+			do: [ :aNumber | 
+				theJob progress: aNumber.
+				300 milliSeconds wait.	"Run a child job"
+				aNumber = 0.5 ifTrue: [ self job run ] ] ].
+
 	aJob := aBlock asJob.
 	aJob
 		title: 'Job Parent Progress Example';
@@ -256,25 +272,26 @@ GtNotificationJobExamples >> parentJob [
 		max: 1.
 
 	self assert: aJob progress equals: 0.
-	
+
 	aJob progress: 0.3.
 	self assert: aJob progress equals: 0.3.
-	
+
 	^ aJob
 ]
 
 { #category : #'examples - notification' }
 GtNotificationJobExamples >> removalRequestAnnouncement [
 	<gtExample>
+	<return: #GtNotificationJob>
 	| aJobNotification aJob aCollection |
 	aJobNotification := self notificationJob.
 	aJob := aJobNotification job.
 
 	aCollection := OrderedCollection new.
 	aJobNotification onRemovalRequestSend: #add: to: aCollection.
-		
+
 	aJob run.
-	
+
 	self assert: aCollection size equals: 1.
 	self assert: aCollection anyOne notification equals: aJobNotification.
 
@@ -284,13 +301,14 @@ GtNotificationJobExamples >> removalRequestAnnouncement [
 { #category : #'examples - notification' }
 GtNotificationJobExamples >> requestRemoval [
 	<gtExample>
+	<return: #GtNotificationJob>
 	| aNotification aCollection |
 	aCollection := OrderedCollection new.
 	aNotification := self notificationJob.
 	aNotification onRemovalRequestSend: #add: to: aCollection.
 
 	aNotification requestRemoval.
-	
+
 	self assert: aCollection size equals: 1.
 	self assert: aCollection first notification equals: aNotification.
 	self assert: aNotification job isNotNil.
