@@ -10,7 +10,7 @@ BaselineOfGToolkitNotificationsExamples >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'GToolkitNotifications' with: [
-				spec repository: 'github://feenkcom/gtoolkit-notifications:v0.6.1360/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-notifications:v0.6.1361/src' ].
 
 		spec package: 'GToolkit-Notifications-Examples' with: [
 			spec requires: #(#GToolkitNotifications) ].
