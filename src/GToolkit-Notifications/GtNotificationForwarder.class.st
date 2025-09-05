@@ -43,6 +43,13 @@ GtNotificationForwarder >> openedSpaceDo: aBlock [
 
 { #category : #'api - notification' }
 GtNotificationForwarder >> showNotification: aNotification [
+	(aNotification job notNil and: [
+		aNotification job class name = #IceExternalJob])
+			ifTrue: [
+				"Ignore iceberg progress notifications.
+				https://github.com/feenkcom/gtoolkit/issues/4680"
+				^ self ].
+		
 	self spaceDo: [ :aSpace | 
 		aSpace showNotification: aNotification ]
 ]
