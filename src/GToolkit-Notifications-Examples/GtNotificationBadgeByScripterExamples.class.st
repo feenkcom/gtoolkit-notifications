@@ -213,6 +213,12 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 	aScripter
 		substep: 'Play code snippet'
 		do: [ :aStep | 
+		
+			aScripter mouseMoveOver
+				label: 'Hover coder element';
+				// GtSourceCoderEditorId;
+				play.
+		
 			aStep
 				clickStep: [ :s | 
 					s
