@@ -38,7 +38,8 @@ GtNotificationsListElement >> initializeList [
 			aNotificationElement notification: aNotificationEvent ];
 		itemDataUnbinder: [ :aNotificationElement | 
 			aNotificationElement actOnElementDetached ];
-		items: self listItems
+		items: self listItems.
+	listElement aptitude listElement recycler cacheSize: 0
 ]
 
 { #category : #initialization }
