@@ -68,3 +68,9 @@ GtObjectNotificationMessageElement >> subscribeToNotification [
 			send: #onNotificationChanged
 			to: self ]
 ]
+
+{ #category : #accessing }
+GtObjectNotificationMessageElement >> unsubscribeFromNotification [
+	self notificationDo: [ :aNotification | 
+		aNotification unsubscribe: self ]	
+]

@@ -7,6 +7,12 @@ Class {
 	#category : #'GToolkit-Notifications-Job'
 }
 
+{ #category : #'hooks - children' }
+GtNotificationJobElement >> actOnElementDetached [
+	self unsubscribeFromJob.
+	super actOnElementDetached.
+]
+
 { #category : #'private - asserting' }
 GtNotificationJobElement >> assertJob: aJob [ 
 	self 
@@ -75,12 +81,6 @@ GtNotificationJobElement >> onJobEnd: aJobEnd [
 GtNotificationJobElement >> onNotificationChanged [
 	super onNotificationChanged.
 	self updateElement.
-]
-
-{ #category : #'hooks - children' }
-GtNotificationJobElement >> onRemovedFromSceneGraph [
-	super onRemovedFromSceneGraph.
-	self unsubscribeFromJob.
 ]
 
 { #category : #'private - accessing' }
