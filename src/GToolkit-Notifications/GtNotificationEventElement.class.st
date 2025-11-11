@@ -25,6 +25,8 @@ GtNotificationEventElement >> actOnElementDetached [
 	"Callback notifying the element that it was detached from the list of notifications.
 	Elements can use this event to detach their model to avoid holding on to data and 
 	prevent it from being garbaged collected"
+	
+	self clearNotification.
 ]
 
 { #category : #'private - asserting' }
