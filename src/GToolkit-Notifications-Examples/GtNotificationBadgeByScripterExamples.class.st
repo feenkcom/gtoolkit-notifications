@@ -177,16 +177,20 @@ GtNotificationBadgeByScripterExamples >> dropdownListItemElementTarget: aStep it
 GtNotificationBadgeByScripterExamples >> informCode [
 	<gtExample>
 	<return: #ByteString>
-	^ '[ BlBlocUIManagerNotification
-	requestOrNil: #inform:
-	with: { ''Example information'' } ] 
-on: BlBlocUIManagerNotification 
-do: [ :aNotification | 
-	GtNotificationForwarder
-		spaceDo: [ :aSpace | 
-			aSpace root userData at: #exampleSpaceId put: aSpace id ].
-	aNotification pass.
-]'
+	^ (GtNotificationBadgeByScripterExamples>>#informCodeSource) ast body sourceCode
+]
+
+{ #category : #'examples - inform message' }
+GtNotificationBadgeByScripterExamples >> informCodeSource [
+	[ BlBlocUIManagerNotification
+		requestOrNil: #inform:
+		with: {'Example information'} ]
+		on: BlBlocUIManagerNotification
+		do: [ :aNotification | 
+			GtNotificationForwarder
+				spaceDo: [ :aSpace |
+					aSpace root userData at: #exampleSpaceId put: aSpace id ].
+			aNotification pass ]
 ]
 
 { #category : #'examples - inform message' }
@@ -390,6 +394,6 @@ GtNotificationBadgeByScripterExamples >> snippetWithInformCode [
 	<return: #GtPharoSnippetCoder>
 	| aCoder |
 	aCoder := self pharoSnippetCoder.
-	aCoder forSource: self informCode.
+	aCoder forSource: self informCode .
 	^ aCoder
 ]
