@@ -21,6 +21,30 @@ GtNotificationsExamples >> jobNotification [
 	^ GtNotificationJobExamples new notificationJobWithTwoChildren
 ]
 
+{ #category : #'examples - notifications' }
+GtNotificationsExamples >> notificationShownAgainMovesToTheTop [
+	<gtExample>
+	<return: #GtNotifications>
+	| aCollection aJobNotification anObjectNotification |
+	aCollection := self notificationsWithJob.
+	aJobNotification := aCollection asArray first.
+	anObjectNotification := self objectNotification.
+	aCollection addNotification: anObjectNotification.
+	self
+		assert: aCollection asArray
+		equals: (Array with: anObjectNotification with: aJobNotification).
+
+	aCollection addNotification: aJobNotification.
+	self
+		assert: aCollection asArray
+		equals: (Array with: aJobNotification with: anObjectNotification).
+	self assert: (aJobNotification hasSubscriber: aCollection).
+
+	aJobNotification requestRemoval.
+	self assert: aCollection asArray equals: (Array with: anObjectNotification).
+	^ aCollection
+]
+
 { #category : #'examples - job' }
 GtNotificationsExamples >> notificationsWithJob [
 	<gtExample>
