@@ -10,13 +10,13 @@ BaselineOfGToolkitNotifications >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.9.196/src' ].
+				spec repository: 'github://feenkcom/Brick:v0.9.197/src' ].
 		spec
 			baseline: 'GToolkitBasicUtility' with: [
-				spec repository: 'github://feenkcom/gtoolkit-utility:v0.9.76/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-utility:v0.9.77/src' ].
 		spec
 			baseline: 'GToolkitAnnouncerUtility' with: [
-				spec repository: 'github://feenkcom/gtoolkit-utility:v0.9.76/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-utility:v0.9.77/src' ].
 
 		spec package: 'GToolkit-Notifications' with: [
 			spec requires: #(#Brick #GToolkitBasicUtility #GToolkitAnnouncerUtility) ].
