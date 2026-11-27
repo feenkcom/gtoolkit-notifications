@@ -72,6 +72,11 @@ GtNotificationEvent >> registerNotifications [
 	GtWorld allInstancesDo: [ :world | world showNotification: self ]
 ]
 
+{ #category : #accessing }
+GtNotificationEvent >> registerNotificationsIn: anElement [
+	anElement showNotification: self
+]
+
 { #category : #'api - hooks' }
 GtNotificationEvent >> removedFrom: aNotifications [
 	"Subclasses can react to notification removal"
