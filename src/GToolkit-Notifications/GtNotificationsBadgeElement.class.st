@@ -111,8 +111,7 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 	badgeContainer := BrHorizontalPane new
 			addChild: badgeElement;
 			addAptitude: (BrGlamorousWithExplicitDropdownAptitude new
-					handle: [ self newDropdownBadge ] 
-						content: [ self newDropdownContent ];
+					handle: [ self newDropdownBadge ] content: [ self newDropdownContent ];
 					withContainerDownDropdown;
 					when: BrDropdownIsVisible
 						do: [ :anEvent | self onDropdownIsVisible: anEvent ];
@@ -120,7 +119,7 @@ GtNotificationsBadgeElement >> initializeBadgeElement [
 						do: [ :anEvent | self onDropdownIsHidden: anEvent ]);
 			height: 21;
 			hFitContent;
-			background: Color orange;
+			background: self theme status notificationBadgeBackground;
 			geometry: (BlRoundedRectangleGeometry cornerRadius: 4)
 ]
 
@@ -143,7 +142,7 @@ GtNotificationsBadgeElement >> initializeDropdownBadgeElement [
 			addChild: dropdownBadgeElement;
 			height: 21;
 			hFitContent;
-			background: Color orange
+			background: self theme status notificationBadgeBackground
 ]
 
 { #category : #initialization }
@@ -214,8 +213,8 @@ GtNotificationsBadgeElement >> longListThreshold [
 GtNotificationsBadgeElement >> newBadge [
 	^ BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new
-				foreground: Color white);
-		background: Color orange;
+				foreground: self theme status notificationBadgeForeground);
+		background: self theme status notificationBadgeBackground;
 		alignCenter;
 		exact: 21 @ 21
 ]

@@ -48,21 +48,28 @@ GtNotificationBorderElement >> initialize [
 { #category : #initialization }
 GtNotificationBorderElement >> initializeBorderElement [
 	borderElement := BrVerticalPane new
-		hMatchParent;
-		vFitContent;
-		alignCenterLeft;
-		geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
-		border: (BlBorder paint: (Color gray alpha: 0.2) width: 1);
-		margin: (BlInsets all: 7);
-		padding: (BlInsets top: 5 right: 10 bottom: 10 left: 10)
+			hMatchParent;
+			vFitContent;
+			alignCenterLeft;
+			geometry: (BlRoundedRectangleGeometry cornerRadius: 4);
+			border: (BlBorder paint: self theme default subtleBorderColor width: 1);
+			margin: (BlInsets all: 7);
+			padding: (BlInsets
+					top: 5
+					right: 10
+					bottom: 10
+					left: 10)
 ]
 
 { #category : #initialization }
 GtNotificationBorderElement >> initializeElement [
-	self 
-		background: Color white;
-		padding: (BlInsets top: 5 right: 5 bottom: 0 left: 5)
-
+	self
+		background: self theme default contentBackground;
+		padding: (BlInsets
+				top: 5
+				right: 5
+				bottom: 0
+				left: 5)
 ]
 
 { #category : #'api - initialization' }
