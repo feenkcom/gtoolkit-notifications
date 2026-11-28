@@ -35,7 +35,11 @@ GtNotificationsBadgeElement >> actOnNotificationAddedFor: anAnnouncement [
 		ifNotNil: [ :aNotification | 
 			aNotification shouldShowNotifications
 				ifTrue: [ badgeContainer
-						enqueueTask: [ badgeContainer dispatchEvent: (BrDropdownShowWish new anchor: badgeContainer) ]
+						enqueueTask: [
+							"The notification may have been already removed, e.g., when its job finished before this task ran. 
+							Showing the dropdown then would leave it open forever."
+							(self notifications includesNotification: aNotification)
+								ifTrue: [ badgeContainer dispatchEvent: (BrDropdownShowWish new anchor: badgeContainer) ] ]
 								asBlTask ] ]
 ]
 
