@@ -53,6 +53,11 @@ GtNotifications >> gtNotificationsFor: aView [
 		updateWhen: GtNotificationsChangedAnnouncement in: self
 ]
 
+{ #category : #testing }
+GtNotifications >> includesNotification: aGtNotification [
+	^ mutex critical: [ collection includes: aGtNotification ]
+]
+
 { #category : #initialization }
 GtNotifications >> initialize [
 	super initialize.
