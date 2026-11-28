@@ -34,6 +34,29 @@ GtNotificationForwarder >> focusedSpaceDo: aBlock [
 ]
 
 { #category : #'api - space' }
+GtNotificationForwarder >> isProcessedSpace: aSpace [
+	"Return true if a UI process pulses the universe of aSpace, so that tasks enqueued in the space are executed.
+	In a headless image a space saved in the image (e.g. the world) is still open, but no UI process runs,
+	so notifications added to it would accumulate in its task queue forever."
+
+	<return: #Boolean>
+	^ aSpace universe hasUIProcess
+]
+
+{ #category : #'api - space' }
+GtNotificationForwarder >> notificationSpaceDo: aBlock [
+	"Like #spaceDo:, but outside of a coder execution context ignore spaces
+	that no UI process pulses (e.g. the world of a headless image).
+	Notifications added to such spaces would accumulate in their task queue forever."
+
+	GtCoderExecutionContextVariable
+		spaceDo: [ :aSpace | aBlock cull: aSpace ]
+		ifClosed: [ self
+				anotherSpaceDo: [ :aSpace | 
+					(self isProcessedSpace: aSpace) ifTrue: [ aBlock cull: aSpace ] ] ]
+]
+
+{ #category : #'api - space' }
 GtNotificationForwarder >> openedSpaceDo: aBlock [
 	"Find any opened space"
 
@@ -42,15 +65,12 @@ GtNotificationForwarder >> openedSpaceDo: aBlock [
 
 { #category : #'api - notification' }
 GtNotificationForwarder >> showNotification: aNotification [
-	(aNotification job notNil and: [
-		aNotification job class name = #IceExternalJob])
-			ifTrue: [
-				"Ignore iceberg progress notifications.
-				https://github.com/feenkcom/gtoolkit/issues/4680"
-				^ self ].
-		
-	self spaceDo: [ :aSpace | 
-		aSpace showNotification: aNotification ]
+	(aNotification job notNil
+		and: [ aNotification job class name = #IceExternalJob ])
+		ifTrue: [  "Ignore iceberg progress notifications.
+				https://github.com/feenkcom/gtoolkit/issues/4680"^ self ].
+
+	self notificationSpaceDo: [ :aSpace | aSpace showNotification: aNotification ]
 ]
 
 { #category : #'api - space' }

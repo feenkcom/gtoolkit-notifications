@@ -267,6 +267,49 @@ GtNotificationBadgeByScripterExamples >> informInSpace [
 	^ aScripter
 ]
 
+{ #category : #examples }
+GtNotificationBadgeByScripterExamples >> notificationRemovedBeforeAddedTaskRuns [
+	"A notification job may finish, and therefore announce its removal, before the badge handles its addition. The dropdown must not be opened for such an already removed notification, since the hide wish was already spent and nothing would close it afterwards."
+
+	<gtExample>
+	<return: #BlScripter>
+	| aScripter aBadge aNotification |
+	aBadge := GtNotificationsBadgeElement new.
+	aNotification := GtNotificationObjectMessageExamples new notificationEvent
+			showNotifications;
+			hideNotificationsOnRemoval;
+			yourself.
+
+	aScripter := self scripter.
+	aScripter set
+		label: 'Initialize badge';
+		element: [ aBadge ].
+	aScripter play.
+
+	aBadge
+		actOnNotificationRemovedFor: (GtNotificationRemovedAnnouncement new removedNotification: aNotification).
+	aBadge
+		actOnNotificationAddedFor: (GtNotificationAddedAnnouncement new addedNotification: aNotification).
+
+	aScripter wait
+		forEmptySpaceTaskQueue;
+		play.
+
+	aScripter menuStep
+		assertClosedMenuContainer;
+		play.
+
+	aScripter
+		checkStep: [ :s | 
+			s
+				label: 'Check dropdown is not marked as visible';
+				satisfies: [ :aBadgeElement | aBadgeElement isDropdownVisible not ];
+				onSpaceRoot;
+				onChildAt: 1 ].
+
+	^ aScripter
+]
+
 { #category : #'examples - object message' }
 GtNotificationBadgeByScripterExamples >> objectNotificationInSpace [
 	<gtExample>
